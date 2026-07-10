@@ -1,0 +1,12 @@
+---
+import AppShell from "../components/AppShell.astro";
+import PlaylistCalculator from "../components/PlaylistCalculator.astro";
+import ThumbnailDownloader from "../components/ThumbnailDownloader.astro";
+import DeadlinePlanner from "../components/DeadlinePlanner.astro";
+---
+
+<AppShell activeTab="thumbnail">
+  <PlaylistCalculator slot="calculator" />
+  <ThumbnailDownloader slot="thumbnail" />
+  <DeadlinePlanner slot="deadline" />
+</AppShell>
