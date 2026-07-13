@@ -1,4 +1,4 @@
-# YouTube Playlist Length Calculator - Privacy-First Free Tool
+# YouTube Playlist Length Calculator - Private/Public Playlists 
 
 ![Build & Test](https://img.shields.io/badge/Astro-5.9.4-brightgreen.svg)
 ![Framework](https://img.shields.io/badge/Tailwind%20CSS-4.3.2-brightgreen.svg)
@@ -10,14 +10,14 @@ The internet's fastest privacy-first YouTube playlist duration calculator and cr
 ## 🚀 The Complete YouTube Toolkit
 
 This site combines three powerful tools:
-- **📊 Playlist Length Calculator** - Total duration, video count, average length, and speed matrix
+- **📊 Playlist Length Calculator** - Total duration, Private Playlists,  video count, average length, and speed matrix
 - **🖼️ Thumbnail Downloader** - HD MaxRes thumbnails (1920×1080), SD, HQ, MQ
 - **⏰ Deadline Planner** - Plan daily watch schedules at custom speeds to finish by your target date
 
 ## ✨ Key Features
 
 ### YouTube Playlist Calculator
-- Calculate total duration of any public YouTube playlist
+- Calculate total duration of any public/private YouTube playlist
 - Multiple playlists support
 - Custom playback speeds (0.1x–10x)
 - Video range selection
@@ -72,9 +72,8 @@ Built with modern, privacy-respecting technologies:
 
 - **Responsive design** - Works like a native app on mobile
 - **PWA ready** - Can add to home screen for quick access
-- **SSG + SEO** - Static generation with full SEO optimization
 - **Content Security Policy** - Enforced for security
-- **Semantic HTML** - Accessible markup with Schema.org structured data
+- **Blogs** - Detailed Tutorials to use the website effortlessly 
 
 ## 🤝 Contributing
 
@@ -96,14 +95,6 @@ This project is built in the open. Contributions are welcome!
 
 ## 🔑 For Users
 
-### Need Your Own YouTube API Key?
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project
-3. Enable YouTube Data API v3
-4. Create API key in Credentials
-5. Paste into "Use your own API key" field
-6. Free tier: 10,000 units/day (generous for personal use)
-
 ### Private & Unlisted Playlists
 Connect YouTube via OAuth 2.0 to access private playlists, unlisted playlists, and liked videos. All credentials stay in your browser - never sent to servers.
 
@@ -115,19 +106,7 @@ Connect YouTube via OAuth 2.0 to access private playlists, unlisted playlists, a
 
 ## ✨ Project Origins
 
-Built because existing playlist calculators were cluttered with ads, required sign-ups, tracked users, or simply didn't work well with large playlists. What started as a simple duration calculator grew into three tools that the creator uses every week.
+Built because existing playlist calculators were cluttered with ads, required sign-ups, tracked users, or simply didn't work well with large playlists. What started as a simple duration calculator grew into three tools that the creator uses every week. Most of the tools didnt have option for calculating the length of Private Playlists.
 
-**Built for learners, by a learner.**
 
-## ⭐ Show Your Support
-
-- ⭐ Star the repository
-- 📝 Write documentation
-- 🐛 Report bugs
-- 💡 Suggest features
-- 🔧 Fix issues
-- 📖 Write guides
-
-## 📊 SEO Keywords Covered
-
-YouTube playlist calculator, YouTube video duration calculator, YouTube playlist length, YouTube length tracker, YouTube duration tool, YouTube speed calculator, YouTube thumbnail downloader, YouTube thumbnail extractor, YouTube study planner, YouTube deadline planner, YouTube video tracker, YouTube creator tools, privacy-first YouTube tools, free YouTube tools, open source YouTube tools, YouTube Data API tools, YouTube CDN thumbnails, YouTube playlist analyzer
+YouTube playlist calculator, YouTube video duration calculator, YouTube playlist length, YouTube length tracker, YouTube duration tool, YouTube speed calculator, YouTube thumbnail downloader, YouTube thumbnail extractor, YouTube study planner, YouTube deadline planner, YouTube video tracker, YouTube creator tools, privacy-first YouTube tools, free YouTube tools, open source YouTube tools, YouTube Data API tools, YouTube thumbnails, YouTube playlist analyzer
