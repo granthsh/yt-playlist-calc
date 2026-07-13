@@ -1,4 +1,4 @@
-# YouTube Playlist Length Calculator - Private/Public Playlists 
+# [YouTube Playlist Length Calculator](www.ytplaylistcalc.pro) - Private/Public Playlists 
 
 ![Build & Test](https://img.shields.io/badge/Astro-5.9.4-brightgreen.svg)
 ![Framework](https://img.shields.io/badge/Tailwind%20CSS-4.3.2-brightgreen.svg)
