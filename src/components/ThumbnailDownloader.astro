@@ -1,0 +1,398 @@
+---
+// Thumbnail Downloader Component
+---
+
+<div class="relative w-full">
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[400px] bg-radial-[at_50%_0%] from-gradient-preview-start/10 via-transparent to-transparent -z-10 blur-3xl pointer-events-none"></div>
+
+  <!-- Hero -->
+  <div class="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-hairline bg-canvas-elevated-2 mb-4">
+      <span class="w-1.5 h-1.5 rounded-full bg-gradient-preview-end animate-pulse"></span>
+      <span class="text-caption-mono text-mute">YouTube Thumbnail Grabber</span>
+    </div>
+    <h1 class="text-display-lg md:text-display-xl text-ink tracking-tighter mb-4 text-balance">
+      Grab any thumbnail instantly.
+    </h1>
+    <p class="text-body-md text-body text-pretty">
+      Paste a YouTube video URL or ID to preview and download the thumbnail at every available resolution.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    <div class="lg:col-span-8 space-y-8">
+
+      <!-- Input -->
+      <div class="bg-canvas-elevated border border-hairline p-5 md:p-6 rounded-xl shadow-lg">
+        <form id="thumb-form" onsubmit="return false;" class="space-y-4">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <div class="relative flex-grow">
+              <input
+                type="text"
+                id="video-url-input"
+                placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                class="w-full bg-canvas border border-hairline hover:border-hairline-strong focus:border-ink rounded-lg px-4 h-12 text-body-sm text-ink placeholder-mute focus-ring transition-colors"
+                autocomplete="off"
+              />
+              <button type="button" id="btn-clear-input" class="absolute right-3 top-1/2 -translate-y-1/2 text-mute hover:text-ink hidden focus:outline-none">
+                <svg viewBox="0 0 24 24" class="w-5 h-5 stroke-current fill-none stroke-2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <button type="submit" id="btn-fetch" class="bg-primary text-on-primary font-medium px-6 h-12 rounded-lg flex items-center gap-2 transition-all cursor-pointer text-body-sm whitespace-nowrap hover:opacity-90 active:scale-98">
+              <span id="btn-fetch-text">Get Thumbnail</span>
+              <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+          </div>
+          <p id="thumb-error" class="text-caption text-error hidden"></p>
+        </form>
+      </div>
+
+      <!-- Skeleton -->
+      <div id="thumb-skeletons" class="space-y-6 hidden">
+        <div class="bg-canvas-elevated border border-hairline p-4 rounded-xl max-w-xl mx-auto overflow-hidden relative">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-canvas-elevated-2/40 to-transparent bg-[length:200%_100%] animate-shimmer"></div>
+          <div class="aspect-video bg-canvas-elevated-2 rounded-lg mb-4"></div>
+          <div class="h-5 w-3/4 bg-canvas-elevated-2 rounded mx-auto"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          {[0,1,2,3].map(() => (
+            <div class="bg-canvas-elevated border border-hairline p-4 rounded-xl h-16 overflow-hidden relative">
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-canvas-elevated-2/40 to-transparent bg-[length:200%_100%] animate-shimmer"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div id="thumb-results" class="space-y-8 hidden">
+
+        <!-- Preview card -->
+        <div class="bg-canvas-elevated border border-hairline p-4 rounded-xl shadow-xl max-w-xl mx-auto">
+          <div class="aspect-video w-full rounded-lg overflow-hidden border border-hairline bg-canvas-elevated-2 relative group">
+            <img id="preview-img" src="" alt="Thumbnail preview" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute bottom-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span id="preview-badge" class="text-caption-mono text-white px-2 py-0.5 bg-black/60 backdrop-blur rounded text-[10px]"></span>
+            </div>
+          </div>
+          <h3 id="video-title" class="text-body-md-strong text-ink text-center mt-4 line-clamp-2 px-2"></h3>
+          <p id="video-channel" class="text-caption text-mute text-center mt-1"></p>
+        </div>
+
+        <!-- Download buttons -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-caption-mono text-mute uppercase tracking-wider">Download</h4>
+            <span class="text-[10px] text-mute font-mono">If download fails, right-click preview → Save image</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="dl-grid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History sidebar -->
+    <div class="lg:col-span-4">
+      <div class="bg-canvas-elevated border border-hairline p-5 rounded-xl sticky top-24">
+        <div class="flex items-center justify-between border-b border-hairline pb-3 mb-4">
+          <h3 class="text-body-sm-strong text-ink flex items-center gap-2">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2 text-mute"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+            Recent Thumbnails
+          </h3>
+          <button type="button" id="btn-clear-thumb-hist" class="text-caption text-mute hover:text-ink hidden focus:outline-none">Clear</button>
+        </div>
+        <div id="thumb-history" class="space-y-3">
+          <p id="thumb-hist-empty" class="text-body-sm text-mute text-center py-6">No history yet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- ── SEO Content Section ── HD & 4K Thumbnail Download Guide ── -->
+  <section class="mt-16 md:mt-24 max-w-4xl mx-auto px-4" aria-labelledby="thumb-seo-heading">
+    <h2 id="thumb-seo-heading" class="text-display-sm text-ink font-semibold mb-6">Download YouTube Thumbnails in HD and Max Resolution</h2>
+
+    <article class="prose prose-invert max-w-none text-body">
+      <h3 class="text-display-sm text-ink font-semibold mb-4">The Ultimate YouTube Thumbnail Extractor</h3>
+      <p class="text-body text-body-md mb-6">
+        Our <strong>YouTube Thumbnail Downloader</strong> — also called a <strong>YouTube thumbnail extractor</strong> or <strong>YT thumbnail saver</strong> — lets you preview and download any video's thumbnail at every resolution YouTube makes available. Whether you need a <strong>HD YouTube thumbnail</strong> for a blog post, a high-res album art image, or a thumbnail batch for video archiving, this tool extracts the raw image directly from YouTube's CDN with no watermarks, no compression, and no registration. It works for standard videos, Shorts, livestreams, and even individual entries inside a playlist.
+      </p>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-4">All Available Resolutions</h3>
+      <ul class="list-disc list-inside space-y-3 text-body text-body-md mb-6">
+        <li><strong>Max Resolution (1920 x 1080):</strong> Full HD — the highest quality YouTube offers. Ideal for hero images, social media cards, and print materials.</li>
+        <li><strong>Standard Definition (640 x 480):</strong> A balanced option for most web uses with good detail and smaller file size.</li>
+        <li><strong>High Quality (480 x 360):</strong> The default YouTube thumbnail quality — suitable for thumbnails in article embeds.</li>
+        <li><strong>Medium Quality (320 x 180):</strong> The smallest variant, useful for low-bandwidth environments or preview grids.</li>
+      </ul>
+      <p class="text-body text-body-md mb-6">
+        YouTube does not serve true 4K thumbnails; the maximum resolution available is 1920 x 1080 (Full HD). For older videos, low-resolution uploads, and YouTube Shorts, the MaxRes variant may be absent — the tool automatically checks each resolution via a headless probe and shows only those that exist.
+      </p>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-4">How to Download Thumbnails from a Playlist</h3>
+      <p class="text-body text-body-md mb-6">
+        To <strong>download YouTube playlist thumbnails</strong> in bulk, switch to the "Playlist Length" tab and load your playlist. Once the video list appears, each entry shows a small thumbnail preview. Clicking any thumbnail opens the full image in your browser, which you can then save. For individual videos, paste the URL directly into the Thumbnail Grabber input above, click "Get Thumbnail", and select your preferred resolution from the download grid. All downloads happen client-side: the image is fetched as a blob and saved to your device via the browser's native download API, with a fallback to a new tab if the CDN blocks CORS requests.
+      </p>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-4">No Watermarks, No Logins, No Limits</h3>
+      <p class="text-body text-body-md mb-6">
+        Unlike generic online image downloaders, our <strong>YouTube video thumbnail grabber</strong> does not overlay watermarks, require account creation, or impose daily download caps. Every request goes directly from your browser to YouTube's official image CDN (i.ytimg.com) — we never proxy, cache, or store your downloads. The tool also saves a local history of your recent thumbnail lookups so you can quickly re-access previously fetched videos without re-entering the URL.
+      </p>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-4">Frequently Asked Questions</h3>
+      <dl class="space-y-4 text-body text-body-md mb-6">
+        <dt class="font-semibold text-ink">Can I download YouTube Shorts thumbnails in HD?</dt>
+        <dd class="text-body text-body-md ml-4">Yes, the tool works with Shorts URLs. However, Shorts thumbnails rarely have a MaxRes variant; the highest available is typically HQ (480 x 360) due to the vertical video format.</dd>
+        
+        <dt class="font-semibold text-ink">Is there a way to save thumbnails in 4K quality?</dt>
+        <dd class="text-body text-body-md ml-4">YouTube's CDN caps thumbnails at 1920 x 1080 (Full HD). No 4K thumbnail variants exist on YouTube's infrastructure. Max Resolution is the highest option available.</dd>
+        
+        <dt class="font-semibold text-ink">Can I download thumbnails from private or unlisted videos?</dt>
+        <dd class="text-body text-body-md ml-4">Public CDN access to private video thumbnails depends on YouTube's caching policy. If you can view the video, the thumbnail is likely accessible. Unlisted videos generally work, but fully private videos may return a placeholder image.</dd>
+        
+        <dt class="font-semibold text-ink">Do you store my downloaded images or video IDs?</dt>
+        <dd class="text-body text-body-md ml-4">No. The only data stored locally is a lightweight history of recently looked-up video IDs and titles, saved in your browser's localStorage for convenience. No data is sent to any server.</dd>
+      </dl>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-4">Related Tools</h3>
+      <ul class="list-disc list-inside space-y-2 text-body text-body-md">
+        <li><a href="/" class="text-link hover:underline">YouTube Playlist Length Calculator</a> — Calculate total duration of any playlist</li>
+        <li><a href="/deadline-planner" class="text-link hover:underline">Playlist Deadline Planner</a> — Plan daily watch goals to finish before your exam</li>
+      </ul>
+    </article>
+  </section>
+
+<script>
+  import { parseVideoId } from "../lib/youtube";
+  import { getYouTubeApiKey } from "../lib/env";
+
+  interface ThumbHist { id: string; title: string; ts: number; }
+  const HIST_KEY = "ytplc_thumb_hist_v2";
+  const MAX_HIST = 10;
+
+  // Thumbnail URL templates (i.ytimg.com has reliable CORS headers)
+  const RESOLUTIONS = [
+    { key: "maxresdefault", label: "Max Resolution",     desc: "1920×1080",  filename: "thumbnail-maxres.jpg" },
+    { key: "sddefault",     label: "Standard Definition",desc: "640×480",    filename: "thumbnail-sd.jpg" },
+    { key: "hqdefault",     label: "High Quality",       desc: "480×360",    filename: "thumbnail-hq.jpg" },
+    { key: "mqdefault",     label: "Medium Quality",     desc: "320×180",    filename: "thumbnail-mq.jpg" },
+  ];
+
+  const urlInput   = document.getElementById("video-url-input") as HTMLInputElement;
+  const btnClear   = document.getElementById("btn-clear-input") as HTMLButtonElement;
+  const btnFetch   = document.getElementById("btn-fetch")       as HTMLButtonElement;
+  const btnFetchTx = document.getElementById("btn-fetch-text")  as HTMLElement;
+  const errorEl    = document.getElementById("thumb-error")     as HTMLElement;
+  const skeletons  = document.getElementById("thumb-skeletons") as HTMLElement;
+  const resultsEl  = document.getElementById("thumb-results")   as HTMLElement;
+  const previewImg = document.getElementById("preview-img")     as HTMLImageElement;
+  const previewBadge= document.getElementById("preview-badge")  as HTMLElement;
+  const titleEl    = document.getElementById("video-title")     as HTMLElement;
+  const channelEl  = document.getElementById("video-channel")   as HTMLElement;
+  const dlGrid     = document.getElementById("dl-grid")         as HTMLElement;
+  const histEl     = document.getElementById("thumb-history")   as HTMLElement;
+  const histEmpty  = document.getElementById("thumb-hist-empty")as HTMLElement;
+  const btnClrHist = document.getElementById("btn-clear-thumb-hist") as HTMLButtonElement;
+
+  renderHistory();
+
+  // ── Events ────────────────────────────────────────────────────────────
+  urlInput.addEventListener("input", () => {
+    btnClear.classList.toggle("hidden", !urlInput.value.trim());
+  });
+
+  urlInput.addEventListener("paste", () => {
+    // Small delay to let value populate
+    setTimeout(() => {
+      btnClear.classList.toggle("hidden", !urlInput.value.trim());
+      const id = parseVideoId(urlInput.value.trim());
+      if (id) triggerFetch(id);
+    }, 30);
+  });
+
+  btnClear.addEventListener("click", () => {
+    urlInput.value = "";
+    btnClear.classList.add("hidden");
+    errorEl.classList.add("hidden");
+    urlInput.focus();
+  });
+
+  document.getElementById("thumb-form")!.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const id = parseVideoId(urlInput.value.trim());
+    if (!id) { showError("Couldn't parse a video ID — paste a full YouTube URL or 11-character ID."); return; }
+    triggerFetch(id);
+  });
+
+  btnClrHist.addEventListener("click", () => { localStorage.removeItem(HIST_KEY); renderHistory(); });
+
+  // ── Core fetch ────────────────────────────────────────────────────────
+  async function triggerFetch(videoId: string) {
+    try {
+      clearError();
+      setLoading(true);
+
+      // Fetch video metadata via API
+      let title   = `Video ${videoId}`;
+      let channel = "";
+      try {
+        const key = getYouTubeApiKey();
+        const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${key}`);
+        if (res.ok) {
+          const data = await res.json();
+          const item = data.items?.[0];
+          if (item) {
+            title   = item.snippet.title        || title;
+            channel = item.snippet.channelTitle || "";
+          }
+        }
+      } catch (_) {}
+
+      // Probe which resolutions exist in parallel
+      const probeResults = await Promise.all(
+        RESOLUTIONS.map(r => probeResolution(videoId, r.key))
+      );
+
+      // Build download grid
+      dlGrid.innerHTML = "";
+      let bestUrl = "";
+      let bestLabel = "";
+
+      RESOLUTIONS.forEach((r, i) => {
+        const url       = thumbUrl(videoId, r.key);
+        const available = probeResults[i];
+
+        if (available && !bestUrl) { bestUrl = url; bestLabel = r.label; }
+
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = `flex items-center justify-between p-4 rounded-lg border transition-colors focus:outline-none focus-ring text-left group
+          ${available
+            ? "bg-canvas-elevated border-hairline hover:border-hairline-strong hover:bg-canvas-elevated-2 cursor-pointer"
+            : "bg-canvas-elevated border-hairline border-dashed opacity-40 cursor-not-allowed pointer-events-none"}`;
+
+        card.innerHTML = `
+          <div>
+            <div class="text-body-sm-strong text-ink group-hover:text-link transition-colors">${r.label}</div>
+            <div class="text-[11px] text-mute font-mono mt-0.5">${available ? r.desc : "Not available"}</div>
+          </div>
+          <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2 text-mute group-hover:text-link transition-colors shrink-0">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>`;
+
+        if (available) {
+          card.addEventListener("click", () => downloadImage(url, r.filename));
+        }
+        dlGrid.appendChild(card);
+      });
+
+      // Set preview to best resolution
+      if (bestUrl) {
+        previewImg.src     = bestUrl;
+        previewBadge.textContent = bestLabel;
+      }
+      titleEl.textContent   = title;
+      channelEl.textContent = channel;
+
+      saveHistory(videoId, title);
+      setLoading(false);
+    } catch (err: any) {
+      setLoading(false);
+      showError(err.message || "Failed to load thumbnail.");
+    }
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────
+  function thumbUrl(id: string, key: string) {
+    return `https://i.ytimg.com/vi/${id}/${key}.jpg`;
+  }
+
+  /** Returns true if the thumbnail at that resolution is real (not the 120px placeholder). */
+  function probeResolution(videoId: string, resKey: string): Promise<boolean> {
+    return new Promise(resolve => {
+      const img = new Image();
+      const timer = setTimeout(() => resolve(false), 5000); // 5-sec timeout
+      img.onload = () => {
+        clearTimeout(timer);
+        resolve(img.naturalWidth > 120); // YouTube returns 120px placeholder if unavailable
+      };
+      img.onerror = () => { clearTimeout(timer); resolve(false); };
+      img.src = thumbUrl(videoId, resKey);
+    });
+  }
+
+  /** Fetch as blob → trigger <a download> click → revoke. Falls back to new tab on CORS block. */
+  async function downloadImage(url: string, filename: string) {
+    try {
+      const res = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (!res.ok) throw new Error("Fetch failed");
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+    } catch {
+      window.open(url, "_blank");
+    }
+  }
+
+  function setLoading(v: boolean) {
+    if (v) {
+      skeletons.classList.remove("hidden");
+      resultsEl.classList.add("hidden");
+      btnFetch.disabled = true;
+      btnFetchTx.textContent = "Loading…";
+    } else {
+      skeletons.classList.add("hidden");
+      resultsEl.classList.remove("hidden");
+      btnFetch.disabled = false;
+      btnFetchTx.textContent = "Get Thumbnail";
+    }
+  }
+  function showError(m: string) { errorEl.textContent = m; errorEl.classList.remove("hidden"); }
+  function clearError()         { errorEl.classList.add("hidden"); }
+
+  // ── History ───────────────────────────────────────────────────────────
+  function saveHistory(id: string, title: string) {
+    let hist: ThumbHist[] = getHistory().filter(h => h.id !== id);
+    hist.unshift({ id, title, ts: Date.now() });
+    hist = hist.slice(0, MAX_HIST);
+    localStorage.setItem(HIST_KEY, JSON.stringify(hist));
+    renderHistory();
+  }
+
+  function getHistory(): ThumbHist[] {
+    try { return JSON.parse(localStorage.getItem(HIST_KEY)||"[]"); } catch { return []; }
+  }
+
+  function renderHistory() {
+    histEl.querySelectorAll(".th-item").forEach(el => el.remove());
+    const hist = getHistory();
+    if (!hist.length) { histEmpty.classList.remove("hidden"); btnClrHist.classList.add("hidden"); return; }
+    histEmpty.classList.add("hidden"); btnClrHist.classList.remove("hidden");
+
+    for (const h of hist) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "th-item w-full text-left p-3 border border-hairline rounded-lg bg-canvas-elevated hover:bg-canvas-elevated-2 transition-all focus:outline-none focus-ring flex items-center gap-3 group";
+      btn.innerHTML = `
+        <img src="${thumbUrl(h.id,"mqdefault")}" alt="Thumbnail for ${h.title}" class="w-16 h-10 object-cover rounded border border-hairline shrink-0" />
+        <div class="min-w-0 flex-grow">
+          <div class="text-body-sm-strong text-ink truncate">${h.title}</div>
+          <div class="text-caption text-mute font-mono">${h.id}</div>
+        </div>
+        <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2 text-mute group-hover:text-ink shrink-0 transition-colors"><polyline points="9 18 15 12 9 6"/></svg>`;
+      btn.addEventListener("click", () => {
+        urlInput.value = h.id;
+        btnClear.classList.remove("hidden");
+        triggerFetch(h.id);
+      });
+      histEl.appendChild(btn);
+    }
+  }
+</script>

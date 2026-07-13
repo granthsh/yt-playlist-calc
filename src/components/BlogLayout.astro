@@ -1,0 +1,116 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags?: string[];
+  canonicalUrl: string;
+}
+
+const { title, description, pubDate, tags = [], canonicalUrl } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const readingTime = Math.max(
+  1,
+  Math.ceil((Astro.slots.has("default") ? (Astro.slots as any).default.toString().split(/\s+/).length : 0) / 200)
+);
+---
+
+<Layout title={title} description={description} canonicalUrl={canonicalUrl}>
+  <div class="min-h-screen flex flex-col">
+    <Header />
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[400px] bg-radial-[at_50%_0%] from-gradient-develop-start/10 via-transparent to-transparent -z-10 blur-3xl pointer-events-none"></div>
+
+    <header class="max-w-[760px] mx-auto w-full px-4 pt-8 pb-6">
+      <nav class="text-caption text-mute mb-6">
+        <a href="/blog" class="hover:text-link transition-colors">Blog</a>
+        <span class="mx-2">/</span>
+        <span class="text-ink">{title}</span>
+      </nav>
+
+      <h1 class="text-display-lg md:text-display-xl text-ink tracking-tighter mb-4 text-balance">{title}</h1>
+      <p class="text-body-md text-body text-pretty mb-4">{description}</p>
+
+      <div class="flex flex-wrap items-center gap-3 text-caption-mono text-mute">
+        <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+        <span class="w-1 h-1 rounded-full bg-hairline-strong inline-block"></span>
+        <span>{readingTime} min read</span>
+        {tags.length > 0 && (
+          <>
+            <span class="w-1 h-1 rounded-full bg-hairline-strong inline-block"></span>
+            <div class="flex gap-2">
+              {tags.map(tag => (
+                <span class="px-2 py-0.5 rounded-full bg-canvas-elevated border border-hairline text-caption-mono text-mute">{tag}</span>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </header>
+
+    <main class="max-w-[760px] mx-auto w-full px-4 pb-16 flex-grow">
+      <article class="prose prose-invert prose-headings:text-ink prose-p:text-body prose-a:text-link prose-strong:text-ink prose-code:text-code prose-code:bg-canvas-elevated-2 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-pre:bg-canvas-elevated prose-pre:border prose-pre:border-hairline prose-pre:rounded-xl prose-li:text-body prose-img:rounded-xl max-w-none text-body-lg leading-relaxed">
+        <slot />
+      </article>
+
+      <div class="mt-12 pt-8 border-t border-hairline">
+        <div class="bg-canvas-elevated border border-hairline rounded-xl p-6">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-full bg-gradient-develop-start/10 flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 24 24" class="w-7 h-7 fill-gradient-develop-end" aria-hidden="true">
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10zm0 1.5c4.679 0 8.5 3.821 8.5 8.5S16.679 22 12 22 3.5 18.179 3.5 12 7.321 3.5 12 3.5zm5.5 10H9.5v-1h8v1zm0-2.5H9.5v-1h8v1zm0-2.5H9.5v-1h8v1z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-body-sm-strong text-ink">Written by Granth</p>
+              <p class="text-body-sm text-mute">Developer & lifelong learner. Building tools to make YouTube learning easier.</p>
+              <div class="flex gap-3 mt-2">
+                <a href="https://github.com/granthsh" target="_blank" rel="noopener" class="text-link hover:underline text-body-sm">GitHub</a>
+                <a href="https://www.linkedin.com/in/granthsh/" target="_blank" rel="noopener" class="text-link hover:underline text-body-sm">LinkedIn</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 text-center">
+        <a href="/blog" class="inline-flex items-center gap-2 text-link hover:underline text-body-sm font-medium">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2 rotate-180" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          Back to all guides
+        </a>
+      </div>
+    </main>
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": title,
+      "description": description,
+      "datePublished": pubDate.toISOString(),
+      "author": {
+        "@type": "Person",
+        "name": "Granth",
+        "url": "https://github.com/granthsh"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "YouTube Playlist Length Calculator",
+        "logo": "https://ytplaylistcalc.pro/og-image.svg"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": canonicalUrl
+      }
+    }, null, 2)}></script>
+  </div>
+  <Footer />
+</Layout>

@@ -1,0 +1,733 @@
+---
+// Playlist Length Calculator — Full Featured
+---
+
+<div class="relative w-full">
+  <!-- Atmospheric Mesh Glow -->
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[400px] bg-radial-[at_50%_0%] from-gradient-develop-start/10 via-transparent to-transparent -z-10 blur-3xl pointer-events-none"></div>
+
+  <!-- Hero -->
+  <div class="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-hairline bg-canvas-elevated-2 mb-4">
+      <span class="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse"></span>
+      <span class="text-caption-mono text-mute">YouTube Playlist Length Calculator</span>
+    </div>
+    <h1 class="text-display-lg md:text-display-xl text-ink tracking-tighter mb-4 text-balance">
+      Calculate any playlist duration instantly.
+    </h1>
+    <p class="text-body-md text-body text-pretty">
+      Combine multiple playlists, set custom speed and range, search & sort videos, and plan by deadline — all 100% in your browser.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    <!-- Main Column -->
+    <div class="lg:col-span-8 space-y-6">
+
+      <!-- ── Input Card ─────────────────────────────────────────── -->
+      <div class="bg-canvas-elevated border border-hairline p-5 md:p-6 rounded-xl shadow-lg">
+        <form id="playlist-form" onsubmit="return false;" class="space-y-5">
+
+          <!-- Playlist URLs textarea -->
+          <div>
+            <label for="playlist-urls" class="block text-body-sm-strong text-ink mb-1.5">
+              Playlist URLs / IDs
+              <span class="text-caption text-mute font-normal ml-1">(one per line)</span>
+            </label>
+            <textarea
+              id="playlist-urls"
+              rows="3"
+              placeholder="https://www.youtube.com/playlist?list=PLxxxxxx&#10;PLxxxxxx"
+              class="w-full bg-canvas border border-hairline hover:border-hairline-strong focus:border-ink rounded-lg p-3 text-body-sm font-mono text-ink placeholder-mute focus-ring transition-colors resize-y"
+              required
+            ></textarea>
+          </div>
+
+          <!-- Inline filters row -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+            <!-- Custom speed -->
+            <div>
+              <label for="input-custom-speed" class="block text-caption text-mute mb-1.5">
+                Custom Speed (x) <span class="text-[10px]">— leave blank to skip</span>
+              </label>
+              <input
+                type="number"
+                id="input-custom-speed"
+                placeholder="e.g. 1.5"
+                min="0.1" max="10" step="0.05"
+                class="w-full bg-canvas border border-hairline hover:border-hairline-strong focus:border-ink rounded-lg px-3 h-10 text-body-sm font-mono text-ink focus-ring transition-colors"
+              />
+            </div>
+            <!-- Start index -->
+            <div>
+              <label for="input-range-start" class="block text-caption text-mute mb-1.5">Start Video #</label>
+              <input
+                type="number"
+                id="input-range-start"
+                placeholder="1"
+                min="1"
+                max="1"
+                class="w-full bg-canvas border border-hairline hover:border-hairline-strong focus:border-ink rounded-lg px-3 h-10 text-body-sm font-mono text-ink focus-ring transition-colors"
+              />
+            </div>
+            <!-- End index -->
+            <div>
+              <label for="input-range-end" class="block text-caption text-mute mb-1.5">End Video #</label>
+              <input
+                type="number"
+                id="input-range-end"
+                placeholder="All"
+                min="1"
+                max="1"
+                class="w-full bg-canvas border border-hairline hover:border-hairline-strong focus:border-ink rounded-lg px-3 h-10 text-body-sm font-mono text-ink focus-ring transition-colors"
+              />
+            </div>
+          </div>
+
+          <!-- Custom API Key -->
+          <div class="border-t border-hairline pt-4">
+            <button type="button" id="toggle-api-key" class="text-caption text-mute hover:text-ink focus:outline-none flex items-center gap-1.5 transition-colors">
+              <svg viewBox="0 0 24 24" class="w-3 h-3 fill-none stroke-current stroke-2"><path d="M15 7h3a5 5 0 0 1 0 10h-3m-6 0H6a5 5 0 0 1 0-10h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              Use your own API key
+            </button>
+            <div id="api-key-section" class="hidden mt-3">
+              <label for="input-api-key" class="block text-caption text-mute mb-1.5">
+                YouTube Data API v3 Key
+                <span class="text-[10px]">— optional, overrides the default</span>
+              </label>
+              <input
+                type="password"
+                id="input-api-key"
+                placeholder="AIza..."
+                class="w-full bg-canvas border border-hairline hover:border-hairline-strong focus:border-ink rounded-lg px-3 h-10 text-body-sm font-mono text-ink focus-ring transition-colors"
+              />
+              <p class="text-[10px] text-mute mt-1.5">Your key is saved locally and never sent to our servers. <a href="/faq#how-do-i-get-my-own-youtube-data-api-v3-key" class="text-link hover:underline">How do I get a key?</a></p>
+            </div>
+          </div>
+
+          <!-- OAuth: Private Playlist Access -->
+          <div id="oauth-section" class="border-t border-hairline pt-4">
+            <p class="text-caption text-mute mb-2">Need private playlist?</p>
+            <div id="oauth-connect">
+              <a href="/api/auth/youtube" class="inline-flex items-center gap-2 bg-canvas border border-hairline hover:border-hairline-strong rounded-lg px-4 h-9 text-body-sm text-ink transition-colors focus:outline-none focus-ring">
+                <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                Sign in with Google
+              </a>
+              <p class="text-[10px] text-mute mt-1.5">Required for private playlists.</p>
+            </div>
+            <div id="oauth-connected" class="hidden">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-green animate-pulse"></span>
+                <span class="text-caption text-mute">Connected to Google</span>
+                <button type="button" id="btn-oauth-disconnect" class="text-caption text-error hover:text-error ml-auto focus:outline-none">Disconnect</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions row -->
+          <div class="flex items-center justify-between gap-3">
+            <p id="error-message" class="text-caption text-error hidden flex-grow"></p>
+            <div class="flex items-center gap-3 ml-auto">
+              <button type="button" id="btn-reset-filters" class="text-caption text-mute hover:text-ink focus:outline-none">Reset filters</button>
+              <button
+                type="submit"
+                id="btn-calculate"
+                class="bg-primary text-on-primary font-medium px-6 h-11 rounded-lg flex items-center gap-2 transition-all duration-200 cursor-pointer text-body-sm whitespace-nowrap hover:opacity-90 active:scale-98"
+              >
+                <span>Calculate</span>
+                <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- ── Skeletons ───────────────────────────────────────────── -->
+      <div id="calc-skeletons" class="space-y-6 hidden">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[0,1,2].map(() => (
+            <div class="bg-canvas-elevated border border-hairline p-5 rounded-xl h-24 overflow-hidden relative">
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-canvas-elevated-2/40 to-transparent bg-[length:200%_100%] animate-shimmer"></div>
+              <div class="h-3 w-1/3 bg-canvas-elevated-2 rounded mb-3"></div>
+              <div class="h-7 w-3/4 bg-canvas-elevated-2 rounded"></div>
+            </div>
+          ))}
+        </div>
+        <div class="bg-canvas-elevated border border-hairline p-6 rounded-xl h-52 overflow-hidden relative">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-canvas-elevated-2/40 to-transparent bg-[length:200%_100%] animate-shimmer"></div>
+        </div>
+      </div>
+
+      <!-- ── Results ─────────────────────────────────────────────── -->
+      <div id="calc-results" class="space-y-6 hidden">
+
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div class="bg-canvas-elevated border border-hairline p-4 md:p-5 rounded-xl">
+            <h4 class="text-caption-mono text-mute uppercase mb-2">Duration</h4>
+            <div id="metric-duration" class="text-display-sm text-ink font-semibold tracking-tight">—</div>
+            <div id="metric-duration-raw" class="text-[11px] text-mute font-mono mt-0.5"></div>
+          </div>
+          <div class="bg-canvas-elevated border border-hairline p-4 md:p-5 rounded-xl">
+            <h4 class="text-caption-mono text-mute uppercase mb-2">Videos</h4>
+            <div id="metric-count" class="text-display-sm text-ink font-semibold">—</div>
+            <div id="metric-count-sub" class="text-caption text-mute mt-0.5"></div>
+          </div>
+          <div class="bg-canvas-elevated border border-hairline p-4 md:p-5 rounded-xl col-span-2 sm:col-span-1">
+            <h4 class="text-caption-mono text-mute uppercase mb-2">Avg. Length</h4>
+            <div id="metric-avg" class="text-display-sm text-ink font-semibold">—</div>
+            <div class="text-caption text-mute mt-0.5">per video</div>
+          </div>
+        </div>
+
+        <!-- Speed Matrix -->
+        <div class="bg-canvas-elevated border border-hairline p-5 md:p-6 rounded-xl">
+          <h3 class="text-body-md-strong text-ink mb-4">Speed Matrix Analysis</h3>
+          <div class="grid grid-cols-12 text-caption-mono text-mute border-b border-hairline pb-2 px-1 mb-3">
+            <div class="col-span-4">Speed</div>
+            <div class="col-span-4">Duration</div>
+            <div class="col-span-4 text-right">Time Saved</div>
+          </div>
+          <div id="matrix-container" class="space-y-2"></div>
+        </div>
+
+        <!-- Video List Header -->
+        <div class="bg-canvas-elevated border border-hairline rounded-xl overflow-hidden">
+          <div class="p-4 border-b border-hairline space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <h3 class="text-body-md-strong text-ink">Videos in Playlist</h3>
+              <div class="flex items-center gap-2">
+                <button type="button" id="btn-mark-all" class="text-caption text-mute hover:text-ink border border-hairline px-2.5 py-1 rounded bg-canvas hover:bg-canvas-elevated-2 transition-colors focus:outline-none">Mark All Watched</button>
+                <button type="button" id="btn-clear-watched" class="text-caption text-mute hover:text-ink border border-hairline px-2.5 py-1 rounded bg-canvas hover:bg-canvas-elevated-2 transition-colors focus:outline-none">Clear Watched</button>
+              </div>
+            </div>
+            <!-- Search + Sort row -->
+            <div class="flex gap-2 flex-wrap">
+              <div class="relative flex-grow min-w-[160px]">
+                <svg viewBox="0 0 24 24" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 fill-none stroke-current stroke-2 text-mute pointer-events-none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="search-input" placeholder="Search video titles…" class="w-full bg-canvas border border-hairline hover:border-hairline-strong focus:border-ink rounded-lg pl-9 pr-3 h-9 text-body-sm text-ink placeholder-mute focus-ring transition-colors" />
+              </div>
+              <select id="sort-select" class="bg-canvas border border-hairline hover:border-hairline-strong focus:border-ink rounded-lg px-3 h-9 text-body-sm text-ink focus-ring transition-colors cursor-pointer">
+                <option value="default">Default Order</option>
+                <option value="duration-asc">Duration: Short → Long</option>
+                <option value="duration-desc">Duration: Long → Short</option>
+                <option value="views-desc">Most Viewed</option>
+                <option value="likes-desc">Most Liked</option>
+                <option value="comments-desc">Most Commented</option>
+                <option value="date-desc">Newest Upload</option>
+                <option value="date-asc">Oldest Upload</option>
+              </select>
+            </div>
+            <p class="text-caption text-mute">
+              <span id="range-label">Range: all videos</span> ·
+              <span id="watched-label">0 watched</span> ·
+              <span id="filtered-label" class="hidden text-link">filtered</span>
+            </p>
+          </div>
+          <div id="video-list" class="max-h-[500px] overflow-y-auto divide-y divide-hairline"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar: History -->
+    <div class="lg:col-span-4">
+      <div class="bg-canvas-elevated border border-hairline p-5 rounded-xl sticky top-24">
+        <div class="flex items-center justify-between border-b border-hairline pb-3 mb-4">
+          <h3 class="text-body-sm-strong text-ink flex items-center gap-2">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2 text-mute"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+            Recent Calculations
+          </h3>
+          <button type="button" id="btn-clear-history" class="text-caption text-mute hover:text-ink hidden focus:outline-none">Clear</button>
+        </div>
+        <div id="history-list" class="space-y-3">
+          <p id="history-empty" class="text-body-sm text-mute text-center py-6">No history yet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- ── SEO Content Section ── The Ultimate Guide to YouTube Playlist Management ── -->
+  <section class="mt-16 md:mt-24 max-w-4xl mx-auto px-4" aria-labelledby="seo-heading">
+    <h2 id="seo-heading" class="text-display-sm text-ink font-semibold mb-6">How to Calculate and Optimize Your YouTube Playlist Length</h2>
+
+    <article class="prose prose-invert max-w-none text-body">
+      <h3 class="text-display-sm text-ink font-semibold mb-4">Why YouTube's Native Interface Falls Short</h3>
+      <p class="text-body text-body-md mb-6">
+        YouTube is the world's largest video library, yet it has a glaring omission: there is no native way to view the total cumulative duration of a playlist. When you open any playlist on YouTube, you see a list of individual video timestamps but never a summed playback time at the top. This means students evaluating a 40-video course, professionals estimating a conference track, or casual viewers checking a music compilation have to manually add video lengths — an error-prone and tedious process. Our <strong>YouTube Playlist Length Calculator</strong> bridges this engineering gap by programmatically fetching every video duration from YouTube's Data API v3 and returning the total runtime in seconds. It also calculates the average video length, the video count, and a full speed-adjusted matrix so you know exactly how much time a playlist demands at 1x, 1.5x, or 2x speed.
+      </p>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-4">Advanced Sorting: Duration, Likes, Views, and Dates</h3>
+      <p class="text-body text-body-md mb-6">
+        YouTube's default playlist view orders videos in the sequence the creator set, with no option to reorder by utility. Our tool lets you <strong>sort a YouTube playlist by video length</strong> to find the shortest entries for quick study sessions or the longest ones to block out dedicated time. You can also <strong>sort by likes</strong> to surface the most engaging content and filter out low-quality filler, <strong>sort by views</strong> to see what the community found most valuable, or <strong>sort by upload date</strong> to watch the newest material first. For anyone asking "can you sort a YouTube playlist by length?" — yes, and by multiple other dimensions that YouTube's own interface does not support.
+      </p>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-4">Private Playlists and Google OAuth</h3>
+      <p class="text-body text-body-md mb-6">
+        A common frustration with online playlist tools is that they cannot <strong>check private YouTube playlist duration</strong>. The YouTube Data API restricts private playlist metadata to authorized users only, so most calculators fail here. Our tool solves this with secure <strong>Google Sign-In (OAuth 2.0)</strong>. When you click "Connect YouTube" and authenticate, we request read-only access to your YouTube account metadata. This lets us <strong>calculate private YouTube playlist length</strong>, analyze your <strong>unlisted playlist total duration</strong>, and even summarize your entire liked-videos library — all without storing your credentials. The OAuth token lives exclusively in your browser's memory and is never transmitted to any external server.
+      </p>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-4">Custom API Key Integration for Power Users</h3>
+      <p class="text-body text-body-md mb-6">
+        Every YouTube Data API key has a daily quota of 10,000 units. A single playlist parse costs roughly 1 to 3 units depending on playlist size. For heavy users running dozens of calculations per day, the built-in shared key may occasionally hit <strong>YouTube API quota limits</strong>. Our tool lets you bypass this entirely by entering your own <strong>custom YouTube Data API key</strong> in the settings panel. Once configured, all playlist lookups route through your personal quota, giving you unlimited, uninterrupted access. This feature is invaluable for developers, researchers, and content auditors who need a <strong>YouTube playlist length calculator with custom API key</strong> that works reliably at scale. Your key stays encrypted in your browser's localStorage and is never sent to our infrastructure.
+      </p>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-4">How to Find Your Playlist ID</h3>
+      <p class="text-body text-body-md mb-4">Every YouTube playlist has a unique ID in its URL. Here is how to locate it:</p>
+      <ul class="list-disc list-inside space-y-2 text-body text-body-md mb-6">
+        <li><strong>Desktop:</strong> Navigate to any playlist — the URL reads <code>youtube.com/playlist?list=PL_abc123DEF</code>. The string after <code>list=</code> is your playlist ID.</li>
+        <li><strong>Channel playlists tab:</strong> Click a channel's "Playlists" tab, open the one you need, and copy the address bar URL.</li>
+        <li><strong>YouTube mobile app:</strong> Open the playlist, tap "Share", and copy the link. Extract the <code>list</code> parameter value.</li>
+        <li><strong>From a video in a playlist:</strong> Below the video player, click the playlist name or the "Save" button to see the full playlist URL with the embedded ID.</li>
+      </ul>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-4">Key Features Summary</h3>
+      <ul class="list-disc list-inside space-y-3 text-body text-body-md mb-6">
+        <li><strong>Multi-Playlist Support:</strong> Combine several playlists into one unified calculation — ideal for course bundles or multi-part series.</li>
+        <li><strong>Custom Playback Speed:</strong> Compute the effective duration at 1.25x, 1.5x, 1.75x, 2x, or any custom speed up to 10x.</li>
+        <li><strong>Speed Matrix:</strong> See a side-by-side breakdown of total time at every standard speed with the percentage saved.</li>
+        <li><strong>Video Range Selection:</strong> Isolate a subset of videos — for example, only entries 5 through 15 — for targeted analysis.</li>
+        <li><strong>Search & Sort:</strong> Filter by title and reorder by duration, likes, views, comments, or publish date.</li>
+        <li><strong>Watch Progress:</strong> Mark individual videos as watched so they are excluded from the remaining runtime calculation.</li>
+        <li><strong>Calculation History:</strong> Your last several playlist calculations are stored locally for quick reload.</li>
+      </ul>
+
+      <h3 class="text-display-sm text-ink font-semibold mb-1">Quick Start</h3>
+      <ol class="list-decimal list-inside space-y-2 text-body text-body-md mb-6">
+        <li>Paste one or more YouTube playlist URLs or IDs into the input box above.</li>
+        <li>Optionally adjust the playback speed and video range.</li>
+        <li>Click <strong>Calculate</strong> to see the total duration, video count, average length, and interactive speed matrix.</li>
+        <li>Use the search bar and sort dropdown to reorganize the list by your preferred metric.</li>
+        <li>Connect your Google account to access private playlists, or paste a custom API key in settings for unlimited daily usage.</li>
+      </ol>
+    </article>
+  </section>
+
+<script>
+  import { parsePlaylistId, fetchPlaylistData } from "../lib/youtube";
+  import { formatDuration, formatDurationLong, applySpeed } from "../lib/duration";
+  import { getYouTubeApiKey } from "../lib/env";
+  import { parseAuthFromUrl, getValidAccessToken, isYouTubeAuthenticated, clearYouTubeAuth } from "../lib/auth";
+
+  // ── Types ─────────────────────────────────────────────────────────────
+  interface FlatVideo {
+    id: string; title: string; thumbnail: string;
+    durationSeconds: number; isUnavailable: boolean;
+    viewCount: number; likeCount: number; commentCount: number; publishedAt: string;
+    playlistId: string; playlistTitle: string;
+    globalIndex: number; isWatched: boolean;
+  }
+  interface HistoryEntry { ids: string[]; title: string; videoCount: number; ts: number; }
+
+  const HIST_KEY = "ytplc_history_v3";
+  const MAX_HIST  = 3;
+
+  // ── State ─────────────────────────────────────────────────────────────
+  let allVideos: FlatVideo[] = [];           // canonical list (playlist order)
+  let displayVideos: FlatVideo[] = [];       // after sort/search filter
+  let playlistMetas: {id:string;title:string;count:number;dur:number}[] = [];
+
+  // ── Elements ──────────────────────────────────────────────────────────
+  const form           = document.getElementById("playlist-form")    as HTMLFormElement;
+  const textarea       = document.getElementById("playlist-urls")    as HTMLTextAreaElement;
+  const errorEl        = document.getElementById("error-message")    as HTMLElement;
+  const btnCalc        = document.getElementById("btn-calculate")    as HTMLButtonElement;
+  const btnReset       = document.getElementById("btn-reset-filters")as HTMLButtonElement;
+  const speedIn        = document.getElementById("input-custom-speed")as HTMLInputElement;
+  const rangeStart     = document.getElementById("input-range-start") as HTMLInputElement;
+  const rangeEnd       = document.getElementById("input-range-end")   as HTMLInputElement;
+
+  const skeletons      = document.getElementById("calc-skeletons")   as HTMLElement;
+  const resultsEl      = document.getElementById("calc-results")     as HTMLElement;
+
+  const metricDur      = document.getElementById("metric-duration")  as HTMLElement;
+  const metricDurRaw   = document.getElementById("metric-duration-raw") as HTMLElement;
+  const metricCount    = document.getElementById("metric-count")     as HTMLElement;
+  const metricCountSub = document.getElementById("metric-count-sub") as HTMLElement;
+  const metricAvg      = document.getElementById("metric-avg")       as HTMLElement;
+  const matrixEl       = document.getElementById("matrix-container") as HTMLElement;
+  const videoListEl    = document.getElementById("video-list")       as HTMLElement;
+
+  const searchInput    = document.getElementById("search-input")     as HTMLInputElement;
+  const sortSelect     = document.getElementById("sort-select")      as HTMLSelectElement;
+  const btnMarkAll     = document.getElementById("btn-mark-all")     as HTMLButtonElement;
+  const btnClearWatched= document.getElementById("btn-clear-watched")as HTMLButtonElement;
+
+  const historyList    = document.getElementById("history-list")     as HTMLElement;
+  const historyEmpty   = document.getElementById("history-empty")    as HTMLElement;
+  const btnClearHist   = document.getElementById("btn-clear-history")as HTMLButtonElement;
+
+  const rangeLabel     = document.getElementById("range-label")      as HTMLElement;
+  const watchedLabel   = document.getElementById("watched-label")    as HTMLElement;
+  const filteredLabel  = document.getElementById("filtered-label")   as HTMLElement;
+
+  const toggleApiKey  = document.getElementById("toggle-api-key")  as HTMLButtonElement;
+  const apiKeySection = document.getElementById("api-key-section") as HTMLElement;
+  const apiKeyInput   = document.getElementById("input-api-key")   as HTMLInputElement;
+
+  const oauthConnect    = document.getElementById("oauth-connect")     as HTMLElement;
+  const oauthConnected  = document.getElementById("oauth-connected")   as HTMLElement;
+  const btnOAuthDisconnect = document.getElementById("btn-oauth-disconnect") as HTMLButtonElement;
+
+  let userAccessToken: string | null = null;
+
+  const API_KEY_STORAGE = "ytplc_custom_api_key";
+
+  // ── Init ──────────────────────────────────────────────────────────────
+  renderHistory();
+  const savedKey = localStorage.getItem(API_KEY_STORAGE);
+  if (savedKey) { apiKeyInput.value = savedKey; apiKeySection.classList.remove("hidden"); }
+
+  // Check for OAuth callback or existing auth
+  parseAuthFromUrl();
+  updateOAuthUI();
+
+  async function updateOAuthUI() {
+    const token = await getValidAccessToken();
+    if (token) {
+      userAccessToken = token;
+      oauthConnect.classList.add("hidden");
+      oauthConnected.classList.remove("hidden");
+    } else {
+      userAccessToken = null;
+      oauthConnect.classList.remove("hidden");
+      oauthConnected.classList.add("hidden");
+    }
+  }
+
+  // ── Events ────────────────────────────────────────────────────────────
+  form.addEventListener("submit", (e) => { e.preventDefault(); onCalculate(); });
+
+  toggleApiKey.addEventListener("click", () => {
+    apiKeySection.classList.toggle("hidden");
+    if (!apiKeySection.classList.contains("hidden")) apiKeyInput.focus();
+  });
+  apiKeyInput.addEventListener("input", () => {
+    const v = apiKeyInput.value.trim();
+    if (v) localStorage.setItem(API_KEY_STORAGE, v);
+    else localStorage.removeItem(API_KEY_STORAGE);
+  });
+
+  btnOAuthDisconnect.addEventListener("click", () => {
+    clearYouTubeAuth();
+    userAccessToken = null;
+    oauthConnect.classList.remove("hidden");
+    oauthConnected.classList.add("hidden");
+  });
+
+  btnReset.addEventListener("click", () => {
+    speedIn.value = "";
+    searchInput.value = "";
+    sortSelect.value = "default";
+    if (allVideos.length) {
+      rangeStart.max = String(allVideos.length);
+      rangeEnd.max = String(allVideos.length);
+      rangeStart.value = "1";
+      rangeEnd.value   = String(allVideos.length);
+    }
+    rerender();
+  });
+
+  function clampInput(el: HTMLInputElement) {
+    const min = parseInt(el.min) || 1;
+    const max = parseInt(el.max) || Infinity;
+    const val = parseInt(el.value);
+    if (!isNaN(val)) {
+      if (val < min) el.value = String(min);
+      else if (val > max) el.value = String(max);
+    }
+  }
+
+  [speedIn].forEach(el => el.addEventListener("input", () => rerender()));
+  [rangeStart, rangeEnd].forEach(el => el.addEventListener("input", () => { clampInput(el); rerender(); }));
+  searchInput.addEventListener("input", () => buildDisplayList());
+  sortSelect.addEventListener("change",  () => buildDisplayList());
+
+  btnMarkAll.addEventListener("click",    () => { allVideos.forEach(v => { if (!v.isUnavailable) v.isWatched = true;  }); rerender(); });
+  btnClearWatched.addEventListener("click",() => { allVideos.forEach(v => v.isWatched = false); rerender(); });
+  btnClearHist.addEventListener("click",  () => { localStorage.removeItem(HIST_KEY); renderHistory(); });
+
+  // ── Calculation ───────────────────────────────────────────────────────
+  async function onCalculate() {
+    const lines = textarea.value.split("\n").map(l => l.trim()).filter(Boolean);
+    const ids   = lines.map(parsePlaylistId).filter(Boolean) as string[];
+    if (!ids.length) { showError("No valid playlist IDs found. Add one URL or ID per line."); return; }
+
+    try {
+      clearError();
+      setLoading(true);
+      allVideos = []; playlistMetas = [];
+      let gIdx = 0;
+      const userKey = apiKeyInput.value.trim() || undefined;
+      let apiKey: string;
+      try {
+        apiKey = userKey || getYouTubeApiKey();
+      } catch {
+        if (!userKey) { showError("No API key configured. Enter your own key below or set one in the environment."); setLoading(false); return; }
+        apiKey = userKey;
+      }
+
+      for (let i = 0; i < ids.length; i++) {
+        setBtnText(`Loading ${i+1}/${ids.length}…`);
+        const result = await fetchPlaylistData(ids[i], apiKey, undefined, userAccessToken || undefined);
+        playlistMetas.push({ id: result.playlistId, title: result.playlistTitle, count: result.totalVideos, dur: result.totalDurationSeconds });
+        for (const v of result.videos) {
+          allVideos.push({ ...v, playlistId: result.playlistId, playlistTitle: result.playlistTitle, globalIndex: gIdx++, isWatched: false });
+        }
+      }
+
+      // Preserve user's range input if valid, otherwise set defaults
+      const userStart = parseInt(rangeStart.value);
+      const userEnd = parseInt(rangeEnd.value);
+      rangeStart.max = String(allVideos.length);
+      rangeEnd.max = String(allVideos.length);
+      if (isNaN(userStart) || userStart < 1 || userStart > allVideos.length) {
+        rangeStart.value = "1";
+      }
+      if (isNaN(userEnd) || userEnd < 1 || userEnd > allVideos.length) {
+        rangeEnd.value = String(allVideos.length);
+      }
+
+      saveHistory(ids);
+      setLoading(false);
+      rerender();
+    } catch (err: any) {
+      setLoading(false);
+      showError(err.message || "Failed to load playlists.");
+    } finally {
+      setBtnText("Calculate");
+    }
+  }
+
+  // ── Rerender ──────────────────────────────────────────────────────────
+  function rerender() {
+    if (!allVideos.length) return;
+    buildDisplayList();
+    updateMetrics();
+    updateMatrix();
+    resultsEl.classList.remove("hidden");
+  }
+
+  function buildDisplayList() {
+    const query = searchInput.value.trim().toLowerCase();
+    const sort  = sortSelect.value;
+    const start = clamp(parseInt(rangeStart.value)||1,          1, allVideos.length);
+    const end   = clamp(parseInt(rangeEnd.value)||allVideos.length, start, allVideos.length);
+
+    // Start from canonical range slice
+    let list = allVideos.slice(start-1, end);
+
+    // Search filter
+    if (query) list = list.filter(v => v.title.toLowerCase().includes(query));
+
+    // Sort
+    if (sort !== "default") {
+      list = [...list].sort((a, b) => {
+        switch(sort) {
+          case "duration-asc":  return a.durationSeconds - b.durationSeconds;
+          case "duration-desc": return b.durationSeconds - a.durationSeconds;
+          case "views-desc":    return b.viewCount - a.viewCount;
+          case "likes-desc":    return b.likeCount - a.likeCount;
+          case "comments-desc": return b.commentCount - a.commentCount;
+          case "date-desc":     return +new Date(b.publishedAt) - +new Date(a.publishedAt);
+          case "date-asc":      return +new Date(a.publishedAt) - +new Date(b.publishedAt);
+          default: return 0;
+        }
+      });
+    }
+
+    displayVideos = list;
+
+    // Labels
+    rangeLabel.textContent = `Range: #${start}–#${end}`;
+    watchedLabel.textContent = `${allVideos.filter(v=>v.isWatched).length} watched`;
+    if (query || sort !== "default") filteredLabel.classList.remove("hidden");
+    else filteredLabel.classList.add("hidden");
+
+    renderVideoList();
+  }
+
+  function renderVideoList() {
+    videoListEl.innerHTML = "";
+    if (!displayVideos.length) {
+      const empty = document.createElement("div");
+      empty.className = "p-8 text-center text-mute text-body-sm";
+      empty.textContent = "No videos match your search.";
+      videoListEl.appendChild(empty);
+      return;
+    }
+
+    // Group by playlist if multiple
+    const grouped = new Map<string, FlatVideo[]>();
+    for (const v of displayVideos) {
+      if (!grouped.has(v.playlistId)) grouped.set(v.playlistId, []);
+      grouped.get(v.playlistId)!.push(v);
+    }
+
+    for (const [plId, vids] of grouped) {
+      // Playlist header (only when >1 playlist)
+      if (playlistMetas.length > 1) {
+        const hdr = document.createElement("div");
+        hdr.className = "sticky top-0 bg-canvas-elevated-2 px-4 py-2 border-b border-hairline text-caption-mono text-ink flex justify-between items-center z-10";
+        const meta = playlistMetas.find(m => m.id === plId);
+        hdr.innerHTML = `<span class="truncate">${meta?.title || plId}</span><span class="text-mute ml-2 shrink-0">${vids.length} videos</span>`;
+        videoListEl.appendChild(hdr);
+      }
+
+      for (const video of vids) {
+        const isWatched = video.isWatched;
+        const row = document.createElement("div");
+        row.className = `flex items-center gap-3 px-3 py-2.5 transition-colors ${isWatched ? "opacity-40" : "hover:bg-canvas-elevated-2/40"}`;
+
+        row.innerHTML = `
+          <input type="checkbox" class="video-cb w-4 h-4 accent-link cursor-pointer shrink-0 rounded" data-gidx="${video.globalIndex}" ${isWatched?"checked":""} ${video.isUnavailable?"disabled":""} />
+          <span class="text-caption-mono text-mute w-7 text-right shrink-0">${video.globalIndex+1}</span>
+          ${video.thumbnail
+            ? `<img src="${video.thumbnail}" loading="lazy" alt="Thumbnail for ${video.title}" class="w-14 h-8 rounded object-cover border border-hairline shrink-0" />`
+            : `<div class="w-14 h-8 rounded bg-canvas-elevated-2 border border-hairline shrink-0"></div>`}
+          <div class="flex-grow min-w-0">
+            <a href="https://www.youtube.com/watch?v=${video.id}${plId?`&list=${plId}`:""}"
+               target="_blank" rel="noopener"
+               class="text-body-sm font-medium text-ink hover:text-link hover:underline truncate block transition-colors focus:outline-none">
+              ${video.title}
+            </a>
+            <div class="text-[10px] text-mute font-mono flex items-center gap-2 mt-0.5 flex-wrap">
+              ${video.publishedAt ? `<span>${new Date(video.publishedAt).toLocaleDateString()}</span>` : ""}
+              ${video.viewCount > 0 ? `<span>${fmtNum(video.viewCount)} views</span>` : ""}
+              ${video.likeCount > 0 ? `<span>${fmtNum(video.likeCount)} likes</span>` : ""}
+            </div>
+          </div>
+          <div class="shrink-0">
+            ${video.isUnavailable
+              ? `<span class="text-[10px] font-mono text-error border border-error-soft/30 rounded px-1.5 py-0.5 bg-error-soft/20">Unavailable</span>`
+              : `<span class="text-caption-mono text-mute px-1.5 py-0.5 bg-canvas-elevated-2 border border-hairline rounded">${formatDuration(video.durationSeconds)}</span>`}
+          </div>`;
+
+        // Checkbox listener
+        const cb = row.querySelector(".video-cb") as HTMLInputElement;
+        if (cb) {
+          cb.addEventListener("change", () => {
+            const idx = parseInt(cb.dataset.gidx!);
+            if (allVideos[idx]) allVideos[idx].isWatched = cb.checked;
+            updateMetrics();
+            updateMatrix();
+            watchedLabel.textContent = `${allVideos.filter(v=>v.isWatched).length} watched`;
+          });
+        }
+        videoListEl.appendChild(row);
+      }
+    }
+  }
+
+  function updateMetrics() {
+    const start = clamp(parseInt(rangeStart.value)||1,          1, allVideos.length);
+    const end   = clamp(parseInt(rangeEnd.value)||allVideos.length, start, allVideos.length);
+    const range = allVideos.slice(start-1, end);
+    const active = range.filter(v => !v.isUnavailable && !v.isWatched);
+    const totalSec = active.reduce((s,v) => s+v.durationSeconds, 0);
+    const avgSec   = active.length ? totalSec/active.length : 0;
+
+    metricDur.textContent    = formatDurationLong(totalSec);
+    metricDurRaw.textContent = formatDuration(totalSec);
+    metricCount.textContent  = String(range.length);
+    metricCountSub.textContent = `${active.length} unwatched`;
+    metricAvg.textContent    = formatDuration(avgSec);
+  }
+
+  function updateMatrix() {
+    const start = clamp(parseInt(rangeStart.value)||1,          1, allVideos.length);
+    const end   = clamp(parseInt(rangeEnd.value)||allVideos.length, start, allVideos.length);
+    const range = allVideos.slice(start-1, end).filter(v => !v.isUnavailable && !v.isWatched);
+    const base  = range.reduce((s,v)=>s+v.durationSeconds, 0);
+
+    const customSpeedVal = parseFloat(speedIn.value);
+    const speeds: {label:string; factor:number; custom?:boolean}[] = [
+      {label:"1.0x (Normal)", factor:1.0},
+      {label:"1.25x",         factor:1.25},
+      {label:"1.5x",          factor:1.5},
+      {label:"1.75x",         factor:1.75},
+      {label:"2.0x",          factor:2.0},
+    ];
+    if (!isNaN(customSpeedVal) && customSpeedVal > 0 && ![1,1.25,1.5,1.75,2].includes(customSpeedVal)) {
+      speeds.push({label:`${customSpeedVal.toFixed(2)}x (Custom)`, factor:customSpeedVal, custom:true});
+      speeds.sort((a,b)=>a.factor-b.factor);
+    }
+
+    matrixEl.innerHTML = "";
+    speeds.forEach(s => {
+      const dur  = applySpeed(base, s.factor);
+      const saved = Math.max(0, base - dur);
+      const pct   = base > 0 ? Math.round((saved/base)*100) : 0;
+      const row = document.createElement("div");
+      row.className = "grid grid-cols-12 items-center text-body-sm py-1.5 px-1 hover:bg-canvas-elevated-2/50 rounded-lg transition-colors";
+      row.innerHTML = `
+        <div class="col-span-4 font-medium text-ink flex items-center gap-1.5">
+          ${s.label}
+          ${s.custom ? `<span class="text-[9px] font-mono px-1 py-0.5 border border-link/40 rounded bg-link/10 text-link">custom</span>` : ""}
+        </div>
+        <div class="col-span-4 font-mono text-ink font-semibold">${formatDurationLong(dur)}</div>
+        <div class="col-span-4 flex items-center justify-end gap-2">
+          <span class="text-caption-mono text-mute">${pct>0 ? `-${formatDurationLong(saved)} (${pct}%)` : "Baseline"}</span>
+          <div class="w-14 bg-canvas h-1.5 rounded-full overflow-hidden hidden sm:block">
+            <div class="bg-primary h-full rounded-full" style="width:${pct}%"></div>
+          </div>
+        </div>`;
+      matrixEl.appendChild(row);
+    });
+  }
+
+  // ── History ───────────────────────────────────────────────────────────
+  function saveHistory(ids: string[]) {
+    let hist: HistoryEntry[] = getHistory().filter(h => h.ids.join("|") !== ids.join("|"));
+    let title = playlistMetas[0]?.title || ids[0];
+    if (playlistMetas.length > 1) title += ` + ${playlistMetas.length-1} more`;
+    hist.unshift({ ids, title, videoCount: allVideos.length, ts: Date.now() });
+    hist = hist.slice(0, MAX_HIST);
+    localStorage.setItem(HIST_KEY, JSON.stringify(hist));
+    renderHistory();
+  }
+
+  function getHistory(): HistoryEntry[] {
+    try { return JSON.parse(localStorage.getItem(HIST_KEY)||"[]"); } catch { return []; }
+  }
+
+  function renderHistory() {
+    historyList.querySelectorAll(".hist-item").forEach(el=>el.remove());
+    const hist = getHistory();
+    if (!hist.length) { historyEmpty.classList.remove("hidden"); btnClearHist.classList.add("hidden"); return; }
+    historyEmpty.classList.add("hidden"); btnClearHist.classList.remove("hidden");
+    for (const h of hist) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "hist-item w-full text-left p-3 border border-hairline rounded-lg bg-canvas-elevated hover:bg-canvas-elevated-2 hover:border-hairline-strong transition-all focus:outline-none focus-ring flex items-center justify-between group";
+      btn.innerHTML = `
+        <div class="overflow-hidden mr-2">
+          <div class="text-body-sm-strong text-ink truncate">${h.title}</div>
+          <div class="text-caption text-mute mt-0.5">${h.videoCount} videos · ${new Date(h.ts).toLocaleDateString()}</div>
+        </div>
+        <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2 text-mute group-hover:text-ink shrink-0 transition-colors"><polyline points="9 18 15 12 9 6"/></svg>`;
+      btn.addEventListener("click", () => {
+        textarea.value = h.ids.join("\n");
+        onCalculate();
+      });
+      historyList.appendChild(btn);
+    }
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────
+  function setLoading(v: boolean) {
+    if (v) { skeletons.classList.remove("hidden"); resultsEl.classList.add("hidden"); btnCalc.disabled=true; btnCalc.classList.add("opacity-50"); }
+    else   { skeletons.classList.add("hidden");    btnCalc.disabled=false; btnCalc.classList.remove("opacity-50"); }
+  }
+  function setBtnText(t: string) { btnCalc.querySelector("span")!.textContent = t; }
+  function showError(msg: string) { errorEl.textContent=msg; errorEl.classList.remove("hidden"); }
+  function clearError()           { errorEl.classList.add("hidden"); }
+  function clamp(v:number, lo:number, hi:number) { return Math.max(lo, Math.min(hi, v)); }
+  function fmtNum(n: number) {
+    if (n >= 1e9) return (n/1e9).toFixed(1)+"B";
+    if (n >= 1e6) return (n/1e6).toFixed(1)+"M";
+    if (n >= 1e3) return (n/1e3).toFixed(1)+"K";
+    return String(n);
+  }
+</script>
+

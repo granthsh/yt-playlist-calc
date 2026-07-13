@@ -1,0 +1,55 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout
+  title="Server Error (500) | YouTube Playlist Length Calculator"
+  description="We encountered an unexpected server error. Please refresh the page or return to the YouTube Playlist Length Calculator to calculate playlist durations, download HD thumbnails, or create study schedules."
+  canonicalUrl="https://ytplaylistcalc.pro/500"
+  noindex
+/>
+
+<div class="relative w-full min-h-screen flex flex-col px-4 md:px-6">
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[400px] bg-radial-[at_50%_0%] from-gradient-develop-start/10 via-transparent to-transparent -z-10 blur-3xl pointer-events-none"></div>
+
+  <div class="flex-grow flex items-center justify-center">
+    <div class="text-center max-w-xl mx-auto py-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-hairline bg-canvas-elevated-2 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+        <span class="text-caption-mono text-mute">Error 500</span>
+      </div>
+
+      <p class="text-display-xl md:text-[6rem] font-semibold text-ink tracking-tighter leading-none mb-4">500</p>
+
+      <h1 class="text-display-md md:text-display-lg text-ink tracking-tight mb-4 text-balance">
+        Something went wrong
+      </h1>
+      <p class="text-body-md text-body text-pretty mb-10">
+        We hit an unexpected server error. It's on us, not you — try refreshing the page, or head back home in the meantime.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button
+          type="button"
+          onclick="window.location.reload()"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-medium rounded-lg transition-all duration-200 hover:opacity-90 active:scale-[0.98] focus:outline-none focus-ring whitespace-nowrap cursor-pointer"
+        >
+          <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          <span>Try Again</span>
+        </button>
+        <a href="/" class="inline-flex items-center gap-2 px-6 py-3 border border-hairline hover:border-hairline-strong text-ink font-medium rounded-lg transition-colors focus:outline-none focus-ring whitespace-nowrap">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Back to Home</span>
+        </a>
+      </div>
+
+      <p class="text-body-sm text-mute mt-8">
+        If this keeps happening, please <a href="/contact" class="text-link hover:underline">let us know</a>.
+      </p>
+    </div>
+  </div>
+
+  <Footer />
+</div>
+</Layout>

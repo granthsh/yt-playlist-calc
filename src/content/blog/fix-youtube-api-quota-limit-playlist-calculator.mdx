@@ -1,0 +1,90 @@
+---
+title: "How to Fix YouTube API Quota Limit in Playlist Calculators"
+description: "Hitting YouTube API quota limits? Get your own free API key or use OAuth for unlimited playlist calculations. Step-by-step guide included."
+pubDate: 2026-06-28
+tags: ["API", "quota", "troubleshooting"]
+order: 6
+---
+
+If you use YouTube playlist calculators frequently, you may eventually hit a **YouTube API quota limit** error. This happens because every YouTube Data API key is limited to 10,000 units per day, and the shared key used by free tools can be exhausted by heavy usage.
+
+Here is how to fix it — two ways.
+
+## Understanding the YouTube API Quota
+
+Every call to the YouTube Data API costs a certain number of units:
+
+- A playlist lookup: ~1 unit
+- A video list fetch (50 videos): ~1 unit
+- Searching: ~100 units
+
+With 10,000 units per day, a typical user can run dozens of playlist calculations before hitting the limit. But during peak usage times, the shared pool can run out.
+
+## Solution 1: Get Your Own YouTube API Key (Recommended)
+
+The most reliable fix is to use your **own API key**. It is free, takes 5 minutes, and gives you a dedicated daily quota.
+
+### Step-by-Step Guide
+
+1. **Go to the Google Cloud Console**
+   Navigate to [console.cloud.google.com](https://console.cloud.google.com/).
+
+2. **Create a new project**
+   Click the project dropdown at the top, then **New Project**. Give it a name like "Playlist Calculator" and click **Create**.
+
+3. **Enable the YouTube Data API v3**
+   - Go to **APIs & Services > Library** (in the left sidebar).
+   - Search for **"YouTube Data API v3"**.
+   - Click it, then click **Enable**.
+
+4. **Create an API key**
+   - Go to **APIs & Services > Credentials**.
+   - Click **Create Credentials > API key**.
+   - Copy the generated key (it looks like `AIzaSy...`).
+
+5. **Restrict the key (optional but recommended)**
+   - Click **Edit API Key**.
+   - Under **API restrictions**, select **"Restrict key"**.
+   - Choose **"YouTube Data API v3"** from the list.
+   - Click **Save**. This prevents the key from being used by any other service.
+
+6. **Paste the key into our tool**
+   - Go to the **[calculator page](/)**.
+   - Click the **API Key** toggle button in the settings.
+   - Paste your key into the input field.
+   - It is saved locally in your browser for future use.
+
+### How Much Does It Cost?
+
+The free tier includes **10,000 units per day**. For personal use, that is more than enough. If you need more, Google offers additional quota for a fee — but most users never hit the free limit when using their own key.
+
+## Solution 2: Sign In with Google (OAuth)
+
+If you do not want to manage an API key, click **"Connect YouTube"** on the calculator page and sign in with your Google account. This uses OAuth 2.0 authentication, which routes requests through your personal YouTube quota. It also unlocks private playlist access.
+
+## Why Does the Shared Key Run Out?
+
+Our tool includes a built-in API key that works for most users. However, because it is shared across everyone using the site, heavy usage during peak hours can temporarily exhaust the daily quota. This is normal for any free online tool that relies on a third-party API.
+
+## Pro Tips for Heavy Users
+
+1. **Save your API key in the tool** — once pasted, it persists in your browser's localStorage.
+2. **Monitor your usage** — the Google Cloud Console shows your daily unit consumption.
+3. **Set up billing alerts** — you can configure email alerts when usage approaches 80% of your quota.
+4. **Use OAuth as a fallback** — if your key runs out, switch to Google sign-in for the rest of the day.
+
+## FAQ
+
+**Is my API key safe?** Yes. It is stored in your browser's localStorage and never sent to our servers.
+
+**Can I exceed 10,000 units?** You can request additional quota from Google, but 10K units is enough for hundreds of calculations per day.
+
+**Does the OAuth method also hit quota limits?** Yes, but it uses your personal quota, separate from the shared key.
+
+**What happens if both the shared key and my key run out?** You can create multiple Google Cloud projects, each with its own 10K daily quota.
+
+## Related Guides
+
+- **[Calculate Private Playlist Length](/blog/calculate-private-youtube-playlist-length)** — Use OAuth to access private playlists and bypass shared quota.
+
+**[Get started with our calculator](/)** — paste your API key in settings for unlimited usage.

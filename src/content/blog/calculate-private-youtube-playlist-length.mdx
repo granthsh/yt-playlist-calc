@@ -1,0 +1,85 @@
+---
+title: "How to Calculate Private YouTube Playlist Length with Google Sign-In"
+description: "Calculate the total duration of private YouTube playlists, unlisted playlists, and your personal collections securely with Google OAuth sign-in."
+pubDate: 2026-06-22
+tags: ["private playlists", "OAuth", "security"]
+order: 2
+---
+
+Most YouTube playlist calculators can only handle public playlists. If you try to calculate the length of a **private playlist**, an **unlisted playlist**, or your personal **Watch Later** list, they fail — because the YouTube Data API does not expose private metadata without authentication.
+
+Our calculator solves this with secure **Google OAuth 2.0 sign-in**.
+
+## Why Private Playlists Require Authentication
+
+YouTube's Data API v3 treats private playlists differently from public ones:
+
+- **Public playlists:** Anyone can read the video list and durations via the API.
+- **Private / unlisted playlists:** Only the owner (authenticated via OAuth) can access the metadata.
+
+This is a privacy safeguard. Without authentication, no tool can enumerate the videos in your private collections. That is why most calculators give up and tell you private playlists are unsupported.
+
+## How to Calculate Private Playlist Length Securely
+
+1. Go to the **[calculator page](/)**.
+2. Click **"Connect YouTube"** above the Calculate button.
+3. Sign in with your Google account in the popup.
+4. Grant **read-only** access to your YouTube data.
+5. Paste your private playlist URL or ID into the input box.
+6. Click **Calculate**.
+
+The tool will then read the playlist metadata and return the total duration, video count, and speed matrix — exactly as it does for public playlists.
+
+## What You Can Access After Signing In
+
+Once authenticated, the tool can read:
+
+- **Private playlists** you created
+- **Unlisted playlists** you own
+- **Watch Later** list
+- **Liked videos** collection
+- Any playlist where you have collaborator access
+
+## Security and Privacy
+
+Your security is our priority:
+
+- The OAuth token is stored in your browser's memory only.
+- It is **never sent** to any external server.
+- We request the **minimum scope**: read-only access to your YouTube data.
+- No write permissions — we cannot modify, delete, or create anything.
+- You can revoke access anytime via your [Google Account permissions page](https://myaccount.google.com/permissions).
+
+## Alternative: Use Your Own API Key
+
+If you prefer not to sign in with Google, you can paste your own **YouTube Data API key** in the settings panel. This also lets you bypass the daily quota limits on the shared key.
+
+Here is how to get your own key:
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project or select an existing one.
+3. Navigate to **APIs & Services > Library** and enable **YouTube Data API v3**.
+4. Go to **APIs & Services > Credentials** and click **Create Credentials > API key**.
+5. Copy the key and paste it into the **"Use your own API key"** field in our tool.
+
+The free tier gives you 10,000 units per day — enough for hundreds of playlist calculations.
+
+## Can Someone Else Access My Private Playlists via Your Tool?
+
+Private YouTube playlists are tied to the Google account that created them. If someone shares a private or unlisted playlist with you via Gmail, YouTube does not expose that playlist's metadata through the API unless the owner's account is authenticated. To calculate the length, the playlist owner must sign in with their own Google account.
+
+## FAQ
+
+**Is this safe?** Yes. OAuth 2.0 is the same protocol used by millions of apps. Your credentials are never shared with us.
+
+**Can I use this with my own API key instead?** Yes. Open the settings panel and paste your key.
+
+**Does this work for liked videos?** Yes. After signing in, your liked videos playlist becomes accessible.
+
+**Can I revoke access later?** Yes. Visit [Google Account Permissions](https://myaccount.google.com/permissions) and remove our app.
+
+## Related Guides
+
+- **[Fix YouTube API Quota Limit](/blog/fix-youtube-api-quota-limit-playlist-calculator)** — Learn how to set up your own API key for unlimited usage.
+
+**[Calculate your private playlist length now](/)** — sign in with Google and get started in seconds.

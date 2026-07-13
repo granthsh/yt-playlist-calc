@@ -1,0 +1,63 @@
+---
+interface Props {
+  question: string;
+  answer: string;
+  isOpen?: boolean;
+  id?: string;
+}
+
+const { question, answer, isOpen = false, id } = Astro.props;
+---
+
+<details class="group border-b border-hairline" open={isOpen} id={id}>
+  <summary 
+    class="flex items-center justify-between py-5 text-body-md font-medium text-ink cursor-pointer list-none focus:outline-none focus-ring"
+    aria-expanded={isOpen}
+  >
+    <span class="pr-4">{question}</span>
+    <svg class="w-5 h-5 text-mute shrink-0 transition-transform duration-200 group-open:rotate-180" 
+         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </summary>
+  <div class="pb-5 animate-accordion-open">
+    <div class="prose prose-invert max-w-none text-body" set:html={answer} />
+  </div>
+</details>
+
+<style>
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  details summary::marker {
+    display: none;
+  }
+  
+  .animate-accordion-open {
+    animation: accordionOpen 0.3s ease-out;
+  }
+  
+  @keyframes accordionOpen {
+    from {
+      opacity: 0;
+      transform: translateY(-0.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Smooth height transition for content */
+  details[open] > div {
+    animation: accordionOpen 0.3s ease-out;
+  }
+  
+  /* Focus styles for accessibility */
+  details summary:focus-visible {
+    outline: 2px solid var(--color-link);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+</style>

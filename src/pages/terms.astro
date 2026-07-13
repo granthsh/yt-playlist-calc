@@ -1,0 +1,202 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout 
+  title="Terms of Service - YouTube Playlist Length Calculator"
+  description="Read the terms of service for utilizing our free YouTube playlist duration tracker, deadline planners, and high-resolution image extractors."
+  canonicalUrl="https://ytplaylistcalc.pro/terms"
+/>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Terms & Conditions",
+  "description": "Terms of Service for YouTube Playlist Length Calculator — free, privacy-first tools for YouTube."
+}, null, 2)}></script>
+---
+
+<div class="relative w-full">
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[400px] bg-radial-[at_50%_0%] from-gradient-develop-start/10 via-transparent to-transparent -z-10 blur-3xl pointer-events-none"></div>
+
+  <!-- Hero -->
+  <div class="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-hairline bg-canvas-elevated-2 mb-4">
+      <span class="w-1.5 h-1.5 rounded-full bg-gradient-develop-end animate-pulse"></span>
+      <span class="text-caption-mono text-mute">Terms & Conditions</span>
+    </div>
+    <h1 class="text-display-lg md:text-display-xl text-ink tracking-tighter mb-4 text-balance">
+      Terms of Service
+    </h1>
+    <p class="text-body-md text-body text-pretty">
+      Last updated: July 2025. By using ytplaylistcalc.pro, you agree to these terms. Please read them carefully.
+    </p>
+  </div>
+
+  <div class="max-w-4xl mx-auto space-y-12">
+    <!-- Acceptance -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">1. Acceptance of Terms</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>By accessing or using <strong>ytplaylistcalc.pro</strong> (the "Site"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part, you may not use the Site.</p>
+        <p>We reserve the right to modify these Terms at any time. Material changes will be reflected in the "Last updated" date above. Continued use after changes constitutes acceptance.</p>
+      </div>
+    </section>
+
+    <!-- Description of Service -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">2. Description of Service</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>The Site provides free, client-side tools for YouTube users:</p>
+        <ul class="list-disc list-inside space-y-2 pl-4">
+          <li><strong>Playlist Length Calculator</strong> — Calculate total duration, video count, average length, and speed matrix for any public YouTube playlist(s).</li>
+          <li><strong>Thumbnail Grabber</strong> — Download YouTube video thumbnails in all available resolutions.</li>
+          <li><strong>Deadline Planner</strong> — Plan daily watch schedules to finish a playlist by a target date at chosen playback speeds.</li>
+        </ul>
+        <p>All tools run entirely in your browser (client-side). No server-side processing of your data occurs.</p>
+  </div>
+    </section>
+
+    <!-- Free Use -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">3. Free Use & No Warranty</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>The Site is provided <strong>free of charge</strong>. There are no paid tiers, subscriptions, or feature gates.</p>
+        <p><strong>THE SITE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR ACCURACY.</strong></p>
+        <p>We do not guarantee that:</p>
+        <ul class="list-disc list-inside space-y-2 pl-4">
+          <li>The Site will be uninterrupted, timely, secure, or error-free.</li>
+          <li>The Site will be available at all times or from all locations.</li>
+          <li>Defects will be corrected (though we try our best).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- User Responsibilities -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">4. User Responsibilities</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>By using the Site, you agree to:</p>
+        <ul class="list-disc list-inside space-y-3 pl-4">
+          <li>Use the tools only for personal, non-commercial purposes (commercial use of calculated data is allowed, but not resale of the tool itself).</li>
+          <li>Not attempt to reverse-engineer, decompile, or exploit the client-side code beyond normal browser inspection.</li>
+          <li>Not scrape, crawl, or automate requests to the Site or YouTube's API via our tools at excessive rates.</li>
+          <li>Respect YouTube's Terms of Service and API Terms when using data fetched through our tools.</li>
+          <li>Not use the tools for any illegal, harmful, or unauthorized purpose.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Intellectual Property -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">5. Intellectual Property</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p><strong>Our IP:</strong> The Site's code, design, and original content are licensed under the <strong>MIT License</strong>. You may use, modify, and distribute the code per the license terms. View source: <a href="https://github.com/granthsh/yt-playlist-calc" target="_blank" rel="noopener" class="text-link hover:underline">github.com/granthsh/yt-playlist-calc</a>.</p>
+        <p><strong>YouTube's IP:</strong> Video titles, thumbnails, durations, and other metadata belong to their respective creators and YouTube. Our tools only display data provided by YouTube's official API. We claim no ownership over YouTube content.</p>
+        <p><strong>Your Data:</strong> You retain ownership of any playlists you calculate, plans you create, or thumbnails you download. We claim no rights over them.</p>
+      </div>
+    </section>
+
+    <!-- Privacy -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">6. Privacy & Data</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p><strong>We don't collect personal data.</strong> Read our full <a href="/privacy-policy" class="text-link hover:underline">Privacy Policy</a> for details. Summary:</p>
+        <ul class="list-disc list-inside space-y-2 pl-4 mt-2">
+          <li>No analytics, tracking, cookies, or third-party scripts.</li>
+          <li>All processing happens in your browser (client-side).</li>
+          <li>Only localStorage is used (your device only).</li>
+          <li>Network requests only to YouTube's official API and thumbnail CDN.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Third-Party Services -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">7. Third-Party Services</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>The Site uses two Google services:</p>
+        <ul class="list-disc list-inside space-y-3 pl-4">
+          <li><strong>YouTube Data API v3</strong> — For fetching public playlist/video metadata. Subject to <a href="https://developers.google.com/terms" target="_blank" rel="noopener" class="text-link hover:underline">Google APIs Terms</a> and <a href="https://developers.google.com/youtube/terms" target="_blank" rel="noopener" class="text-link hover:underline">YouTube API Terms</a>.</li>
+        </ul>
+        <p>Your use of the Site constitutes acceptance of those third-party terms as they apply to API/CDN usage.</p>
+      </div>
+    </section>
+
+    <!-- Limitation of Liability -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">8. Limitation of Liability</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL THE CREATORS, CONTRIBUTORS, OR HOSTING PROVIDERS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOSS OF DATA, PROFITS, GOODWILL, OR BUSINESS OPPORTUNITIES, ARISING FROM OR RELATED TO YOUR USE OF THE SITE.</strong></p>
+        <p>Total liability shall not exceed the amount you paid for the Service (which is $0).</p>
+      </div>
+    </section>
+
+    <!-- Indemnification -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">9. Indemnification</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>You agree to indemnify and hold harmless the creators from any claims, damages, or expenses (including legal fees) arising from your misuse of the Site, violation of these Terms, or violation of any third-party rights.</p>
+      </div>
+    </section>
+
+    <!-- Termination -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">10. Termination</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>We may suspend or terminate your access to the Site at any time, without notice, for violation of these Terms. You may stop using the Site at any time. Provisions that should survive termination (IP, liability, indemnification) will survive.</p>
+      </div>
+    </section>
+
+    <!-- Governing Law -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">11. Governing Law</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>These Terms are governed by the laws of the jurisdiction where the creator resides, without regard to conflict of law principles. Disputes will be resolved in the courts of that jurisdiction.</p>
+      </div>
+    </section>
+
+    <!-- Open Source -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">12. Open Source</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>The Site's source code is open source under the MIT License. You can view, fork, and contribute at:</p>
+        <p class="mt-4"><a href="https://github.com/granthsh/yt-playlist-calc" target="_blank" rel="noopener" class="text-link hover:underline font-mono">github.com/granthsh/yt-playlist-calc</a></p>
+        <p>Contributions are welcome! Please read the contributing guidelines in the repository.</p>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">13. Contact</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>Questions about these Terms?</p>
+        <ul class="list-disc list-inside space-y-2 pl-4">
+          <li>GitHub: <a href="https://github.com/granthsh/yt-playlist-calc" target="_blank" rel="noopener" class="text-link hover:underline">github.com/granthsh/yt-playlist-calc</a> (open an issue)</li>
+          <li>LinkedIn: <a href="https://www.linkedin.com/in/granthsh/" target="_blank" rel="noopener" class="text-link hover:underline">linkedin.com/in/granthsh</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="text-center mt-16 pt-8 border-t border-hairline">
+      <h3 class="text-display-sm text-ink font-semibold mb-4">Ready to use the tools?</h3>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-medium rounded-lg transition-all duration-200 hover:opacity-90 active:scale-[0.98] focus:outline-none focus-ring whitespace-nowrap">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>
+          <span>Playlist Length Calculator</span>
+        </a>
+        <a href="/youtube-thumbnail-downloader" class="inline-flex items-center gap-2 px-6 py-3 border border-hairline hover:border-hairline-strong text-ink font-medium rounded-lg transition-colors focus:outline-none focus-ring whitespace-nowrap">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <span>Thumbnail Grabber</span>
+        </a>
+        <a href="/deadline-planner" class="inline-flex items-center gap-2 px-6 py-3 border border-hairline hover:border-hairline-strong text-ink font-medium rounded-lg transition-colors focus:outline-none focus-ring whitespace-nowrap">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          <span>Deadline Planner</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <Footer />
+</div>

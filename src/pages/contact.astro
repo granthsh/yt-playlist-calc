@@ -1,0 +1,175 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout 
+  title="Contact Us - YouTube Playlist Length Calculator"
+  description="Have feature requests or bugs to report? Get in touch with the development team behind the internet's fastest YouTube playlist analyzer tool."
+  canonicalUrl="https://ytplaylistcalc.pro/contact"
+>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact Us",
+  "description": "Contact the creator of YouTube Playlist Length Calculator via GitHub or LinkedIn."
+}, null, 2)}></script>
+
+<div class="relative w-full min-h-screen flex flex-col">
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[400px] bg-radial-[at_50%_0%] from-gradient-develop-start/10 via-transparent to-transparent -z-10 blur-3xl pointer-events-none"></div>
+
+  <!-- Hero -->
+  <div class="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-hairline bg-canvas-elevated-2 mb-4">
+      <span class="w-1.5 h-1.5 rounded-full bg-gradient-develop-end animate-pulse"></span>
+      <span class="text-caption-mono text-mute">Contact</span>
+    </div>
+    <h1 class="text-display-lg md:text-display-xl text-ink tracking-tighter mb-4 text-balance">
+      Get in Touch
+    </h1>
+    <p class="text-body-md text-body text-pretty">
+      Questions, feedback, bug reports, or feature requests — I'd love to hear from you.
+    </p>
+  </div>
+
+  <div class="max-w-2xl mx-auto space-y-10 flex-grow">
+    <!-- Contact Links -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Direct Links</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-6">
+        <article class="bg-canvas-elevated border border-hairline rounded-xl p-6 md:flex md:items-center md:gap-6">
+          <div class="w-14 h-14 rounded-xl bg-gradient-develop-start/10 flex items-center justify-center shrink-0 mx-auto md:mx-0">
+            <svg viewBox="0 0 24 24" class="w-7 h-7 fill-gradient-develop-end" aria-hidden="true">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.305-.536-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.872.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </div>
+          <div class="text-center md:text-left mt-4 md:mt-0 md:ml-6">
+            <h3 class="text-body-md-strong text-ink mb-1">GitHub Repository</h3>
+            <p class="text-body-sm text-mute mb-3">Best for bug reports, feature requests, and code contributions.</p>
+            <a href="https://github.com/granthsh/yt-playlist-calc" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary font-medium rounded-lg transition-all duration-200 hover:opacity-90 active:scale-[0.98] focus:outline-none focus-ring whitespace-nowrap">
+              <svg viewBox="0 0 24 24" class="w-5 h-5 fill-current" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.305-.536-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.872.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              <span>github.com/granthsh/yt-playlist-calc</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="bg-canvas-elevated border border-hairline rounded-xl p-6 md:flex md:items-center md:gap-6">
+          <div class="w-14 h-14 rounded-xl bg-gradient-preview-start/10 flex items-center justify-center shrink-0 mx-auto md:mx-0">
+            <svg viewBox="0 0 24 24" class="w-7 h-7 fill-gradient-preview-end" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 21.571V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </div>
+          <div class="text-center md:text-left mt-4 md:mt-0 md:ml-6">
+            <h3 class="text-body-md-strong text-ink mb-1">LinkedIn</h3>
+            <p class="text-body-sm text-mute mb-3">Professional networking, collaborations, or general inquiries.</p>
+            <a href="https://www.linkedin.com/in/granthsh/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-preview-start text-on-primary font-medium rounded-lg transition-all duration-200 hover:opacity-90 active:scale-[0.98] focus:outline-none focus-ring whitespace-nowrap">
+              <svg viewBox="0 0 24 24" class="w-5 h-5 fill-current" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 21.571V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              <span>linkedin.com/in/granthsh</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Other Ways -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Other Ways to Connect</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <div class="bg-canvas-elevated border border-hairline rounded-xl p-6">
+          <h3 class="text-body-md-strong text-ink mb-3 flex items-center gap-2">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 text-link" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 2v12h16V6H4zm8 8l4-4-4-4"/></svg>
+            GitHub Issues
+          </h3>
+          <p class="text-body text-mute mb-3">Best for bug reports, feature requests, and technical discussions. Search existing issues first to avoid duplicates.</p>
+          <a href="https://github.com/granthsh/yt-playlist-calc/issues" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-link hover:underline text-body-sm font-medium">
+            Open an issue <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-none stroke-current stroke-2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+        </div>
+
+        <div class="bg-canvas-elevated border border-hairline rounded-xl p-6">
+          <h3 class="text-body-md-strong text-ink mb-3 flex items-center gap-2">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 text-link" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            Feature Requests
+          </h3>
+          <p class="text-body text-mute mb-3">Have an idea for a new feature? Open a GitHub issue with the "enhancement" label. I review all suggestions and prioritize based on impact and feasibility.</p>
+          <a href="https://github.com/granthsh/yt-playlist-calc/issues/new?assignees=&labels=enhancement&template=feature_request.md" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-link hover:underline text-body-sm font-medium">
+            Request a feature <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-none stroke-current stroke-2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+        </div>
+
+        <div class="bg-canvas-elevated border border-hairline rounded-xl p-6">
+          <h3 class="text-body-md-strong text-ink mb-3 flex items-center gap-2">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 text-link" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            Bug Reports
+          </h3>
+          <p class="text-body text-mute mb-3">Found a bug? Please include: browser/OS, steps to reproduce, expected vs actual behavior, and screenshots if possible.</p>
+          <a href="https://github.com/granthsh/yt-playlist-calc/issues/new?assignees=&labels=bug&template=bug_report.md" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-link hover:underline text-body-sm font-medium">
+            Report a bug <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-none stroke-current stroke-2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+        </div>
+
+        <div class="bg-canvas-elevated border border-hairline rounded-xl p-6">
+          <h3 class="text-body-md-strong text-ink mb-3 flex items-center gap-2">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 text-link" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 2v12h16V6H4zm8 8l4-4-4-4"/></svg>
+            General Questions
+          </h3>
+          <p class="text-body text-mute mb-3">For anything else — partnerships, press, or just to say hi — reach out on LinkedIn or GitHub. I typically respond within 1-2 business days.</p>
+          <a href="https://www.linkedin.com/in/granthsh/" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-link hover:underline text-body-sm font-medium">
+            LinkedIn <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-none stroke-current stroke-2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Response Time -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Response Time</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <ul class="list-disc list-inside space-y-3 pl-4">
+          <li><strong>GitHub Issues:</strong> Usually within 24-48 hours.</li>
+          <li><strong>LinkedIn Messages:</strong> Usually within 1-2 business days.</li>
+          <li><strong>Weekends/Holidays:</strong> May take longer.</li>
+          <li><strong>Feature Requests:</strong> Acknowledged within 48 hours; implementation depends on scope and priority.</li>
+        </ul>
+        <p class="mt-4">Please include as much detail as possible — browser/OS, steps to reproduce, screenshots, and expected vs actual behavior help me resolve issues faster.</p>
+      </div>
+    </section>
+
+    <!-- FAQ Link -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Common Questions</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>Many common questions are answered in our <a href="/faq" class="text-link hover:underline">FAQ</a>:</p>
+        <ul class="list-disc list-inside space-y-2 pl-4">
+          <li><a href="/faq#playlist" class="text-link hover:underline">How do I calculate a YouTube playlist length?</a></li>
+          <li><a href="/faq#playlist" class="text-link hover:underline">Is the calculator completely free?</a></li>
+          <li><a href="/faq#playlist" class="text-link hover:underline">Can I use it on my phone?</a></li>
+          <li><a href="/faq#deadline" class="text-link hover:underline">How do I divide a playlist over days?</a></li>
+          <li><a href="/faq#thumbnail" class="text-link hover:underline">How do I download thumbnails in HD?</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="text-center mt-16 pt-8 border-t border-hairline">
+      <h3 class="text-display-sm text-ink font-semibold mb-4">Ready to start?</h3>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-medium rounded-lg transition-all duration-200 hover:opacity-90 active:scale-[0.98] focus:outline-none focus-ring whitespace-nowrap">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>
+          <span>Calculate Playlist Length</span>
+        </a>
+        <a href="/youtube-thumbnail-downloader" class="inline-flex items-center gap-2 px-6 py-3 border border-hairline hover:border-hairline-strong text-ink font-medium rounded-lg transition-colors focus:outline-none focus-ring whitespace-nowrap">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <span>Download Thumbnail</span>
+        </a>
+        <a href="/deadline-planner" class="inline-flex items-center gap-2 px-6 py-3 border border-hairline hover:border-hairline-strong text-ink font-medium rounded-lg transition-colors focus:outline-none focus-ring whitespace-nowrap">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          <span>Plan by Deadline</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <Footer />
+</div>
+</Layout>

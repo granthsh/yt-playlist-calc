@@ -1,0 +1,234 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout 
+  title="Privacy Policy - YouTube Playlist Length Calculator"
+  description="Your data privacy matters. Read how our tools process all calculations 100% locally in your browser without tracking or storing playlist URLs."
+  canonicalUrl="https://ytplaylistcalc.pro/privacy-policy"
+/>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Privacy Policy",
+  "description": "Privacy Policy for YouTube Playlist Length Calculator — no data collection, no tracking, no ads."
+}, null, 2)}></script>
+---
+
+<div class="relative w-full">
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[400px] bg-radial-[at_50%_0%] from-gradient-develop-start/10 via-transparent to-transparent -z-10 blur-3xl pointer-events-none"></div>
+
+  <!-- Hero -->
+  <div class="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-hairline bg-canvas-elevated-2 mb-4">
+      <span class="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse"></span>
+      <span class="text-caption-mono text-mute">Privacy Policy</span>
+    </div>
+    <h1 class="text-display-lg md:text-display-xl text-ink tracking-tighter mb-4 text-balance">
+      Your privacy matters. Period.
+    </h1>
+    <p class="text-body-md text-body text-pretty">
+      Last updated: July 2025. This policy explains what data we don't collect, how the tools work locally, and your rights.
+    </p>
+  </div>
+
+  <div class="max-w-4xl mx-auto space-y-12">
+    <!-- TL;DR -->
+    <section class="bg-canvas-elevated border border-hairline rounded-xl p-6 md:p-8">
+      <h2 class="text-display-sm text-ink font-semibold mb-4 flex items-center gap-3">
+        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-none stroke-current stroke-2 text-link" aria-hidden="true">
+          <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+          <line x1="4" y1="22" x2="4" y2="15"/>
+        </svg>
+        TL;DR — The Short Version
+      </h2>
+      <div class="prose prose-invert max-w-none text-body space-y-3">
+        <ul class="list-disc list-inside space-y-2 pl-4">
+          <li><strong>Zero data collection.</strong> We don't collect, store, or transmit any personal data, playlist URLs, video titles, watch history, or usage analytics.</li>
+          <li><strong>100% client-side.</strong> All calculations (playlist duration, thumbnail downloads, deadline plans) run entirely in your browser using JavaScript.</li>
+          <li><strong>No tracking.</strong> No Google Analytics, no cookies, no pixels, no fingerprinting, no third-party scripts.</li>
+          <li><strong>Local storage only.</strong> Your watch progress (marked videos) and calculation history stay in your browser's localStorage — never sent to any server.</li>
+          <li><strong>API requests only.</strong> The only network requests are to YouTube's official Data API (for video durations) and i.ytimg.com (for thumbnails) — both are Google's official services.</li>
+        </ul>
+      </div>
+    </section>
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">What Data Is Processed (Locally)</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>Since everything runs in your browser, "processing" means data temporarily held in memory during your session:</p>
+        <ul class="list-disc list-inside space-y-3 pl-4">
+          <li><strong>Playlist URLs/IDs you paste:</strong> Used only to fetch video data from YouTube's API. Never stored, logged, or transmitted elsewhere.</li>
+          <li><strong>Video metadata (titles, durations, thumbnails):</strong> Fetched from YouTube's API, displayed in the UI, and optionally cached in localStorage for your calculation history.</li>
+          <li><strong>Watch progress:</strong> Videos you mark as "watched" are saved to localStorage so you can resume later. This data never leaves your device.</li>
+          <li><strong>Calculation history:</strong> Recent playlist calculations (URLs, titles, video counts, durations) saved to localStorage for quick re-access. You can clear this anytime via the "Clear" button in the history panel.</li>
+          <li><strong>Settings:</strong> Theme preference (light/dark), language preference, and optional custom YouTube API key stored in localStorage.</li>
+        </ul>
+        <p class="mt-4">None of this data is sent to our servers, analytics providers, or any third party.</p>
+      </div>
+    </section>
+
+    <!-- Network Requests -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Network Requests Made</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>The only outbound requests from this site:</p>
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="border-b border-hairline">
+              <th class="text-left p-3 text-caption-mono text-mute uppercase tracking-wider">Destination</th>
+              <th class="text-left p-3 text-caption-mono text-mute uppercase tracking-wider">Purpose</th>
+              <th class="text-left p-3 text-caption-mono text-mute uppercase tracking-wider">Data Sent</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-hairline">
+            <tr>
+              <td class="p-3 font-mono text-body-sm">youtube.googleapis.com</td>
+              <td class="p-3 text-body-sm">Fetch video durations, titles, thumbnails, view counts for playlist calculation</td>
+              <td class="p-3 text-body-sm">Playlist ID(s) you entered; optional custom API key</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-mono text-body-sm">i.ytimg.com</td>
+              <td class="p-3 text-body-sm">Download thumbnail images at requested resolutions</td>
+              <td class="p-3 text-body-sm">Video ID(s) from your playlist</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-mono text-body-sm">fonts.gstatic.com (optional)</td>
+              <td class="p-3 text-body-sm">Load Geist/Geist Mono variable fonts if not cached locally</td>
+              <td class="p-3 text-body-sm">None (font request only)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="mt-4 text-sm text-mute">No requests are made to analytics, advertising, or tracking domains. You can verify this in your browser's Network tab (DevTools → Network).</p>
+      </div>
+    </section>
+
+    <!-- LocalStorage Details -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">LocalStorage Keys Used</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>All data stored in your browser's localStorage under the <code class="bg-canvas-elevated px-1.5 py-0.5 rounded text-sm font-mono">ytplc_*</code> namespace:</p>
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="border-b border-hairline">
+              <th class="text-left p-3 text-caption-mono text-mute uppercase tracking-wider">Key</th>
+              <th class="text-left p-3 text-caption-mono text-mute uppercase tracking-wider">Purpose</th>
+              <th class="text-left p-3 text-caption-mono text-mute uppercase tracking-wider">Retention</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-hairline">
+            <tr>
+              <td class="p-3 font-mono text-body-sm">ytplc_history_v3</td>
+              <td class="p-3 text-body-sm">Recent playlist calculations (URLs, titles, video counts, durations)</td>
+              <td class="p-3 text-body-sm">Until manually cleared (max 3 entries)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-mono text-body-sm">ytplc_thumb_hist_v2</td>
+              <td class="p-3 text-body-sm">Recent thumbnail downloads (video IDs, titles)</td>
+              <td class="p-3 text-body-sm">Until manually cleared (max 10 entries)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-mono text-body-sm">ytplc_deadline_hist_v1</td>
+              <td class="p-3 text-body-sm">Recent deadline plans</td>
+              <td class="p-3 text-body-sm">Until manually cleared (max 3 entries)</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-mono text-body-sm">theme</td>
+              <td class="p-3 text-body-sm">Light/dark mode preference</td>
+              <td class="p-3 text-body-sm">Until changed</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-mono text-body-sm">language</td>
+              <td class="p-3 text-body-sm">Language preference (FAQ)</td>
+              <td class="p-3 text-body-sm">Until changed</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-mono text-body-sm">youtube_api_key</td>
+              <td class="p-3 text-body-sm">Optional custom YouTube Data API key</td>
+              <td class="p-3 text-body-sm">Until removed</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="mt-4"><strong>You control this data.</strong> Use the "Clear" buttons in each tool's history panel, or clear all site data via your browser settings (Settings → Privacy → Clear browsing data → Cookies and site data).</p>
+      </div>
+    </section>
+
+    <!-- Third-Party Services -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Third-Party Services</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>We use two Google services as part of core functionality:</p>
+        <ul class="list-disc list-inside space-y-3 pl-4">
+          <li><strong>YouTube Data API v3</strong> — Official API for fetching public playlist/video metadata. Subject to <a href="https://developers.google.com/terms" target="_blank" rel="noopener" class="text-link hover:underline">Google APIs Terms of Service</a> and <a href="https://developers.google.com/youtube/terms" target="_blank" rel="noopener" class="text-link hover:underline">YouTube API Services Terms of Service</a>.</li>
+          <li><strong>YouTube Thumbnail CDN (i.ytimg.com)</strong> — Official thumbnail hosting. No additional terms beyond standard YouTube usage.</li>
+        </ul>
+        <p>We do <strong>not</strong> use:</p>
+        <ul class="list-disc list-inside space-y-2 pl-4">
+          <li>Google Analytics, Google Tag Manager, or any analytics</li>
+          <li>Ad networks (AdSense, DoubleClick, etc.)</li>
+          <li>Social media pixels (Facebook, Twitter, LinkedIn)</li>
+          <li>CDN analytics (Cloudflare Web Analytics, etc.)</li>
+          <li>Error tracking (Sentry, LogRocket, etc.)</li>
+          <li>Session recording (Hotjar, FullStory, etc.)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Your Rights -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Your Rights</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <p>Since we don't collect personal data, traditional data subject rights (access, rectification, erasure, portability) don't apply in the traditional sense. However, you have full control:</p>
+        <ul class="list-disc list-inside space-y-3 pl-4">
+          <li><strong>Access:</strong> All your data is visible in the UI (history panels, settings).</li>
+          <li><strong>Erasure:</strong> Click "Clear" in any history panel, or clear site data in browser settings.</li>
+          <li><strong>Portability:</strong> Copy data manually from the UI, or read localStorage directly via DevTools.</li>
+          <li><strong>Opt-out:</strong> Simply don't use the tool — no data is collected passively.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Children's Privacy -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Children's Privacy</h2>
+      <div class="prose prose-invert max-w-none text-body">
+        <p>This site is not directed at children under 13 (or 16 in the EU/UK). We don't knowingly collect data from children. Since we don't collect any personal data at all, COPPA/GDPR-K compliance is inherent. If you're a parent and believe your child has used the tool, rest assured no personal data was collected.</p>
+      </div>
+    </section>
+
+    <!-- Security -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Security</h2>
+      <div class="prose prose-invert max-w-none text-body space-y-4">
+        <ul class="list-disc list-inside space-y-3 pl-4">
+          <li><strong>HTTPS everywhere:</strong> All connections use TLS 1.2+.</li>
+          <li><strong>Content Security Policy:</strong> Restricts script/style sources to self and approved origins.</li>
+          <li><strong>Dependency hygiene:</strong> Minimal dependencies, regularly updated via Dependabot.</li>
+          <li><strong>Open source:</strong> Full code auditable at <a href="https://github.com/granthsh/yt-playlist-calc" target="_blank" rel="noopener" class="text-link hover:underline">github.com/granthsh/yt-playlist-calc</a>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Changes -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Changes to This Policy</h2>
+      <div class="prose prose-invert max-w-none text-body">
+        <p>We may update this policy as features evolve. Material changes will be reflected in the "Last updated" date at the top. Continued use after changes constitutes acceptance. For significant changes (e.g., adding analytics), we'll add a prominent notice on the site.</p>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section>
+      <h2 class="text-display-sm text-ink font-semibold mb-4 pb-3 border-b border-hairline">Contact</h2>
+      <div class="prose prose-invert max-w-none text-body">
+        <p>Questions about this policy or the tool?</p>
+        <ul class="list-disc list-inside space-y-2 pl-4 mt-4">
+          <li>GitHub: <a href="https://github.com/granthsh/yt-playlist-calc" target="_blank" rel="noopener" class="text-link hover:underline">github.com/granthsh/yt-playlist-calc</a> (issues welcome)</li>
+          <li>LinkedIn: <a href="https://www.linkedin.com/in/granthsh/" target="_blank" rel="noopener" class="text-link hover:underline">linkedin.com/in/granthsh</a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+  <Footer />
+</div>

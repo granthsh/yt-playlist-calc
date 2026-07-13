@@ -1,0 +1,250 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Accordion from "../components/Accordion.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout 
+  title="FAQs - YouTube Playlist Length & Tracker Support"
+  description="Frequently asked questions about calculating private playlist lengths, downloading high-res thumbnails, and adjusting playback speed metrics."
+  canonicalUrl="https://ytplaylistcalc.pro/faq"
+  ogType="website"
+/>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I see the total length of a YouTube playlist online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Paste the YouTube playlist URL or ID into our <strong>YouTube Playlist Length Calculator</strong>. It fetches the official video durations from YouTube's API and instantly shows the total playlist length, video count, and average video duration. Works for any public playlist.</p><p><a href=\"/blog/how-to-calculate-youtube-playlist-length\">Read the full guide →</a></p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this YouTube playlist duration calculator completely free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Yes. The tool is <strong>100% free</strong> — no ads, no tracking, no sign-up required, and no usage limits. All calculations run locally in your browser.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this website as a YouTube playlist length calculator app on my phone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Absolutely. The site is fully responsive and works like a native app on mobile browsers (iOS Safari, Android Chrome). You can also add it to your home screen for quick access — no app store download needed.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you offer a Chrome or Firefox extension for calculating YouTube playlist duration?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Not currently. The web version works on all browsers without installation. A browser extension is on our roadmap — star the <a href=\"https://github.com/granthsh/yt-playlist-calc\" target=\"_blank\" rel=\"noopener\">GitHub repo</a> to get notified.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is my calculated playlist length or video count slightly different than YouTube?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Small discrepancies can happen if:</p><ul><li><strong>Private/deleted/unlisted videos</strong> — YouTube's UI may still count them; the API only returns public, playable videos.</li><li><strong>Regional blocks</strong> — Some videos are unavailable in your region and excluded from the API response.</li><li><strong>Live streams / Premieres</strong> — Duration may be unknown until the stream ends.</li><li><strong>API caching</strong> — Rarely, YouTube's API returns slightly stale data.</li></ul>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I divide a YouTube playlist over a specific number of days?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Use our <strong>Deadline Planner</strong> page. Enter the playlist URL, set your target days (e.g., 14 days for a two-week course), choose your playback speed, and it calculates exactly how much to watch per day and per session. You can also set multiple sessions per day.</p><p><a href=\"/blog/youtube-playlist-deadline-planner-study-guide\">Read the full guide →</a></p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the study planner adjust daily watch times for custom playback speeds?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Yes. In the Deadline Planner, set your desired playback speed (e.g., 1.5x, 2x). The daily and per-session watch times automatically adjust — faster speeds mean less clock time per day.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I download a YouTube thumbnail in Full HD or 4K resolution?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Use our <strong>YouTube Thumbnail Grabber</strong>. Paste the video URL or ID, and it instantly shows every available resolution — Max Resolution (1920×1080), SD (640×480), HQ (480×360), MQ (320×180). Click any to download. Note: 4K thumbnails don't exist on YouTube; MaxRes (1080p) is the highest.</p><p><a href=\"/blog/download-hd-youtube-thumbnails-guide\">Read the full guide →</a></p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do some YouTube videos lack a MaxRes (HD) thumbnail option?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>YouTube only generates MaxRes (1920×1080) thumbnails for videos uploaded in HD or higher. Older videos, low-resolution uploads, Shorts, and some livestreams only have SD/HQ/MQ thumbnails. Our tool automatically checks and shows only the resolutions that actually exist. For Shorts, the maximum is typically HQ (480×360) since they're vertical videos.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get my own YouTube Data API v3 key?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<ol><li>Go to the <a href='https://console.cloud.google.com/'>Google Cloud Console</a>.</li><li>Create a new project (or select an existing one).</li><li>Navigate to <strong>APIs &amp; Services → Library</strong> and search for <strong>\"YouTube Data API v3\"</strong>. Click <strong>Enable</strong>.</li><li>Go to <strong>APIs &amp; Services → Credentials</strong> and click <strong>Create Credentials → API key</strong>.</li><li>Copy the generated key and paste it into the <strong>\"Use your own API key\"</strong> field in the calculator or deadline planner.</li></ol><p>The free tier allows <strong>10,000 units/day</strong>, which is more than enough for personal use. Each playlist calculation costs roughly 1–3 units depending on playlist size.</p><p><a href=\"/blog/fix-youtube-api-quota-limit-playlist-calculator\">Read the full guide →</a></p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I calculate private or unlisted playlists?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Yes. Click the <strong>\"Connect YouTube\"</strong> button and sign in with your Google account via OAuth 2.0. Once authenticated, the tool can read your private playlists, unlisted playlists, and liked videos — just like it does for public playlists. Your credentials stay in your browser and are never sent to our servers.</p><p><a href=\"/blog/calculate-private-youtube-playlist-length\">Read the full guide →</a></p>"
+        }
+      }
+    ]
+  })}>
+</script>
+---
+
+<div class="relative w-full min-h-screen flex flex-col">
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[400px] bg-radial-[at_50%_0%] from-gradient-develop-start/10 via-transparent to-transparent -z-10 blur-3xl pointer-events-none"></div>
+
+  <!-- Hero -->
+  <div class="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-hairline bg-canvas-elevated-2 mb-4">
+      <span class="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse"></span>
+      <span class="text-caption-mono text-mute">Frequently Asked Questions</span>
+    </div>
+    <h1 class="text-display-lg md:text-display-xl text-ink tracking-tighter mb-4 text-balance">
+      Find answers to common questions
+    </h1>
+    <p class="text-body-md text-body text-pretty">
+      Can't find what you're looking for? <a href="/contact" class="text-link hover:underline">Contact us</a> — we're happy to help.
+    </p>
+  </div>
+
+  <div class="max-w-3xl mx-auto space-y-12">
+    <!-- Playlist Calculator FAQs -->
+    <section aria-labelledby="playlist-faqs" class="mb-12">
+      <h2 id="playlist-faqs" class="text-display-sm text-ink font-semibold mb-6 pb-3 border-b border-hairline flex items-center gap-3">
+        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-none stroke-current stroke-2 text-link" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>
+        Playlist Length Calculator
+      </h2>
+      <div class="space-y-2">
+        <Accordion
+          question="How do I see the total length of a YouTube playlist online?"
+          answer={`<p>Paste the YouTube playlist URL or ID into our <strong>YouTube Playlist Length Calculator</strong>. It fetches the official video durations from YouTube's API and instantly shows the total playlist length, video count, and average video duration. Works for any public playlist.</p><p class="mt-2"><a href="/blog/how-to-calculate-youtube-playlist-length" class="text-link hover:underline">Read the full guide →</a></p>`}
+        />
+        <Accordion
+          question="Is this YouTube playlist duration calculator completely free to use?"
+          answer={`<p>Yes. The tool is <strong>100% free</strong> — no ads, no tracking, no sign-up required, and no usage limits. All calculations run locally in your browser.</p>`}
+        />
+        <Accordion
+          question="Can I use this website as a YouTube playlist length calculator app on my phone?"
+          answer={`<p>Absolutely. The site is fully responsive and works like a native app on mobile browsers (iOS Safari, Android Chrome). You can also add it to your home screen for quick access — no app store download needed.</p>`}
+        />
+        <Accordion
+          question="Do you offer a Chrome or Firefox extension for calculating YouTube playlist duration?"
+          answer={`<p>Not currently. The web version works on all browsers without installation. A browser extension is on our roadmap — star the <a href="https://github.com/granthsh/yt-playlist-calc" target="_blank" rel="noopener">GitHub repo</a> to get notified.</p>`}
+        />
+        <Accordion
+          question="Why is my calculated playlist length or video count slightly different than YouTube?"
+          answer={`<p>Small discrepancies can happen if:</p><ul><li><strong>Private/deleted/unlisted videos</strong> — YouTube's UI may still count them; the API only returns public, playable videos.</li><li><strong>Regional blocks</strong> — Some videos are unavailable in your region and excluded from the API response.</li><li><strong>Live streams / Premieres</strong> — Duration may be unknown until the stream ends.</li><li><strong>API caching</strong> — Rarely, YouTube's API returns slightly stale data.</li></ul><p class="mt-2"><a href="/blog/how-to-calculate-youtube-playlist-length" class="text-link hover:underline">Read the full guide →</a></p>`}
+        />
+        <Accordion
+          question="How do I divide a YouTube playlist over a specific number of days?"
+          answer={`<p>Use our <strong>Deadline Planner</strong> page (click "Deadline Planner" in the bottom navigation). Enter the playlist URL, set your target days (e.g., 14 days for a two-week course), choose your playback speed, and it calculates exactly how much to watch per day and per session. You can also set multiple sessions per day. The planner shows: total playlist duration, adjusted duration at your speed, daily watch time, per-session time, and the exact finish date.</p>`}
+        />
+      </div>
+    </section>
+
+    <!-- Deadline Planner FAQs -->
+    <section aria-labelledby="deadline-faqs" class="mb-12">
+      <h2 id="deadline-faqs" class="text-display-sm text-ink font-semibold mb-6 pb-3 border-b border-hairline flex items-center gap-3">
+        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-none stroke-current stroke-2 text-link" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+        Deadline Planner
+      </h2>
+      <div class="space-y-2">
+        <Accordion
+          question="How do I divide a YouTube playlist over a specific number of days?"
+          answer={`<p>Use our <strong>Deadline Planner</strong> page (click "Deadline Planner" in the bottom navigation). Enter the playlist URL, set your target days (e.g., 14 days for a two-week course), choose your playback speed, and it calculates exactly how much to watch per day and per session. You can also set multiple sessions per day (1-4) to split viewing into morning/evening blocks. The planner shows: total playlist duration, adjusted duration at your speed, daily watch time, per-session time, and the exact finish date.</p><p class="mt-2"><a href="/blog/youtube-playlist-deadline-planner-study-guide" class="text-link hover:underline">Read the full guide →</a></p>`}
+        />
+        <Accordion
+          question="Does the study planner adjust daily watch times for custom playback speeds?"
+          answer={`<p>Yes. In the Deadline Planner, set your desired playback speed (e.g., 1.5x, 2x). The daily and per-session watch times automatically adjust — faster speeds mean less clock time per day. The speed matrix also shows a breakdown at every common speed (1x, 1.25x, 1.5x, 1.75x, 2x, plus your custom speed) with the total duration and time saved at each speed. You can also adjust the number of sessions per day (1-4) to split the daily total into manageable chunks.</p><p class="mt-2"><a href="/blog/youtube-playlist-deadline-planner-study-guide" class="text-link hover:underline">Read the full guide →</a></p>`}
+        />
+      </div>
+    </section>
+
+    <!-- Thumbnail Downloader FAQs -->
+    <section aria-labelledby="thumbnail-faqs" class="mb-12">
+      <h2 id="thumbnail-faqs" class="text-display-sm text-ink font-semibold mb-6 pb-3 border-b border-hairline flex items-center gap-3">
+        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-none stroke-current stroke-2 text-link" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Thumbnail Downloader
+      </h2>
+      <div class="space-y-2">
+        <Accordion
+          question="How can I download a YouTube thumbnail in Full HD or 4K resolution?"
+          answer={`<p>Use our <strong>YouTube Thumbnail Grabber</strong> page (click "Thumbnail Grabber" in the bottom navigation). Paste the video URL or ID, and it instantly shows every available resolution — Max Resolution (1920×1080), SD (640×480), HQ (480×360), MQ (320×180). Click any to download. <strong>Note:</strong> 4K thumbnails don't exist on YouTube; MaxRes (1080p) is the highest resolution YouTube provides.</p><p class="mt-2"><a href="/blog/download-hd-youtube-thumbnails-guide" class="text-link hover:underline">Read the full guide →</a></p>`}
+        />
+        <Accordion
+          question="Why do some YouTube videos lack a MaxRes (HD) thumbnail option?"
+          answer={`<p>YouTube only generates MaxRes (1920×1080) thumbnails for videos uploaded in HD or higher. Older videos, low-resolution uploads, Shorts, and some livestreams only have SD/HQ/MQ thumbnails. Our tool automatically checks and shows only the resolutions that actually exist. For Shorts, the maximum is typically HQ (480×360) since they're vertical videos.</p><p class="mt-2"><a href="/blog/download-hd-youtube-thumbnails-guide" class="text-link hover:underline">Read the full guide →</a></p>`}
+        />
+      </div>
+    </section>
+
+    <!-- General FAQs -->
+    <section aria-labelledby="general-faqs" class="mb-12">
+      <h2 id="general-faqs" class="text-display-sm text-ink font-semibold mb-6 pb-3 border-b border-hairline flex items-center gap-3">
+        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-none stroke-current stroke-2 text-link" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        General Questions
+      </h2>
+      <div class="space-y-2">
+        <Accordion
+          question="Do I need an API key to use this calculator?"
+          answer={`<p>No. The tool uses a built-in API key for the YouTube Data API v3. For very large playlists (1000+ videos), you may want to use your own API key to avoid rate limits — see the settings in the calculator.</p><p>If you want to use your own key: get one from <a href="https://console.cloud.google.com/" target="_blank" rel="noopener" class="text-link hover:underline">Google Cloud Console</a>, enable YouTube Data API v3, and paste it in the calculator settings.</p>`}
+        />
+        <Accordion
+          question="How do I get my own YouTube Data API v3 key?"
+          id="how-do-i-get-my-own-youtube-data-api-v3-key"
+          answer={`<ol class="list-decimal list-inside space-y-1.5"><li>Go to the <a href="https://console.cloud.google.com/" target="_blank" rel="noopener" class="text-link hover:underline">Google Cloud Console</a>.</li><li>Create a new project (or select an existing one).</li><li>Navigate to <strong>APIs &amp; Services → Library</strong> and search for <strong>"YouTube Data API v3"</strong>. Click <strong>Enable</strong>.</li><li>Go to <strong>APIs &amp; Services → Credentials</strong> and click <strong>Create Credentials → API key</strong>.</li><li>Copy the generated key and paste it into the <strong>"Use your own API key"</strong> field in the calculator or deadline planner.</li></ol><p class="mt-2">The free tier allows <strong>10,000 units/day</strong>, which is more than enough for personal use. Each playlist calculation costs roughly 1–3 units depending on playlist size.</p><p class="mt-2"><a href="/blog/fix-youtube-api-quota-limit-playlist-calculator" class="text-link hover:underline">Read the full guide →</a></p>`}
+        />
+        <Accordion
+          question="Is my data private? Do you track what playlists I calculate?"
+          answer={`<p><strong>No tracking, no analytics, no cookies.</strong> Everything runs in your browser. Playlist URLs, video data, watch progress, and deadline plans stay in your browser's localStorage — never sent to any server.</p>`}
+        />
+        <Accordion
+          question="Can I calculate private or unlisted playlists?"
+          answer={`<p>Yes. Click the <strong>"Connect YouTube"</strong> button above the calculate button and sign in with your Google account via OAuth 2.0. Once authenticated, the tool can read your private playlists, unlisted playlists, and liked videos — just like it does for public playlists. Your credentials stay in your browser and are never sent to our servers.</p><p class="mt-2"><a href="/blog/calculate-private-youtube-playlist-length" class="text-link hover:underline">Read the full guide →</a></p>`}
+        />
+        <Accordion
+          question="How accurate are the duration calculations?"
+          answer={`<p>Durations are fetched directly from YouTube's official Data API v3, so they match the exact video lengths shown on YouTube. The total is a precise sum of all video durations in seconds, then formatted into hours/minutes/seconds.</p><p>At custom playback speeds, we use the formula: <code>adjusted = total / speed</code> (e.g., 2 hours at 1.5x = 1 hour 20 minutes). Time saved is <code>total - adjusted</code>.</p>`}
+        />
+        <Accordion
+          question="Does it work on mobile?"
+          answer={`<p>Yes! The site is fully responsive and works on all modern browsers (iOS Safari, Android Chrome, Firefox, etc.). You can also add it to your home screen for app-like access.</p><p>On mobile, the bottom navigation becomes a fixed dock for easy switching between Calculator, Thumbnail Grabber, and Deadline Planner.</p>`}
+        />
+        <Accordion
+          question="What browsers are supported?"
+          answer={`<p>All modern browsers: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+. The site uses standard web APIs (fetch, localStorage, CSS Grid/Flexbox) with no polyfills needed.</p>`}
+        />
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="text-center mt-16 pt-8 border-t border-hairline">
+      <h3 class="text-display-sm text-ink font-semibold mb-4">Still have questions?</h3>
+      <p class="text-body text-body-md mb-6">We're here to help. Reach out and we'll get back to you.</p>
+      <a href="/contact" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-medium rounded-lg transition-all duration-200 hover:opacity-90 active:scale-[0.98] focus:outline-none focus-ring whitespace-nowrap">
+        <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current stroke-2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span>Contact Us</span>
+      </a>
+    </div>
+  </div>
+    <Footer />
+  </div>
+</Layout>

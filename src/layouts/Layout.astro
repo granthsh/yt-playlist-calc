@@ -1,0 +1,133 @@
+---
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
+import "../styles/global.css";
+
+interface Props {
+	title?: string;
+	description?: string;
+	canonicalUrl?: string;
+	ogImage?: string;
+	ogType?: string;
+	twitterCard?: string;
+	noindex?: boolean;
+}
+
+const {
+	title = "YouTube Playlist Length Calculator | Advanced YT Playlist Tracker",
+	description = "Calculate total YouTube playlist length instantly. Sort videos by length, likes, or date, and track private playlists. 100% free with zero limits!",
+	canonicalUrl = "https://ytplaylistcalc.pro",
+	ogImage = "/og-image.svg",
+	ogType = "website",
+	twitterCard = "summary_large_image",
+	noindex = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+		
+		<!-- SEO Meta Tags -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+		<meta name="theme-color" content="#171717" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: dark)" />
+		
+		<!-- Preconnect Hints -->
+		<link rel="preconnect" href="https://youtube.googleapis.com" />
+		<link rel="preconnect" href="https://i.ytimg.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+		<!-- Keywords -->
+		<meta name="keywords" content="youtube playlist length calculator, yt playlist duration checker, calculate total time of youtube playlist, how to see full length of youtube playlist, youtube playlist length tracker, sort youtube playlist by video length, can you sort a youtube playlist by length, youtube playlist sorter by likes, sort youtube playlist by views and dates, youtube playlist duration display, calculate private youtube playlist length, check private youtube playlist duration, youtube playlist length calculator google sign in, view total duration of private youtube playlist, youtube playlist calculator with custom api key, how to fix youtube api quota limit playlist calculator, safe youtube private playlist tracker, how to find length of unlisted youtube playlist, youtube playlist deadline planner, calculate hours per day to finish youtube course, youtube playlist complete in days calculator, study planner for youtube course playlists, pace calculator for online video courses, time to complete youtube playlist calculator, how many days to finish a playlist tool, download youtube playlist thumbnails, youtube thumbnail extractor max resolution, hd youtube thumbnail downloader, yt thumbnail saver 4k quality, youtube video thumbnail grabber without watermark, save youtube shorts thumbnail hd" />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content={ogType} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage.startsWith("http") ? ogImage : `https://ytplaylistcalc.pro${ogImage}`} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="YouTube Playlist Length Calculator - Calculate playlist duration instantly" />
+		<meta property="og:site_name" content="YouTube Playlist Length Calculator" />
+		<meta property="og:locale" content="en_US" />
+		
+		<!-- Twitter -->
+		<meta property="twitter:card" content={twitterCard} />
+		<meta property="twitter:url" content={canonicalUrl} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={ogImage.startsWith("http") ? ogImage : `https://ytplaylistcalc.pro${ogImage}`} />
+		<meta property="twitter:image:alt" content="YouTube Playlist Length Calculator" />
+		
+		<!-- JSON-LD Structured Data -->
+		<script type="application/ld+json" set:html={JSON.stringify([{
+			"@context": "https://schema.org",
+			"@type": "WebApplication",
+			"name": "YouTube Playlist Length Calculator",
+			"url": "https://ytplaylistcalc.pro",
+			"description": "An advanced online utility to calculate the total duration, sort attributes, and generate execution deadlines for public and private YouTube playlists.",
+			"applicationCategory": "UtilityApplication",
+			"operatingSystem": "All",
+			"browserRequirements": "Requires JavaScript. Requires HTML5.",
+			"offers": {
+				"@type": "Offer",
+				"price": "0.00",
+				"priceCurrency": "USD"
+			}
+		},
+		{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ytplaylistcalc.pro" },
+				{ "@type": "ListItem", "position": 2, "name": "YouTube Playlist Length Calculator", "item": "https://ytplaylistcalc.pro" }
+			]
+		}], null, 2)}></script>
+
+		<!-- Blocking Theme Script -->
+		<script is:inline>
+			(function() {
+				var theme = localStorage.getItem('theme');
+				if (!theme) {
+					theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+				}
+				if (theme === 'dark') {
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.classList.remove('dark');
+				}
+				localStorage.setItem('theme', theme);
+			})();
+		</script>
+	</head>
+	<body class="bg-canvas text-ink font-sans select-none overflow-x-hidden antialiased">
+		<slot />
+	</body>
+</html>
