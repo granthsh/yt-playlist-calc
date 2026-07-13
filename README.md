@@ -1,4 +1,4 @@
-# [YouTube Playlist Length Calculator](www.ytplaylistcalc.pro) - Private/Public Playlists 
+# [YouTube Playlist Length Calculator](https://www.ytplaylistcalc.pro) - Private/Public Playlists 
 
 ![Build & Test](https://img.shields.io/badge/Astro-5.9.4-brightgreen.svg)
 ![Framework](https://img.shields.io/badge/Tailwind%20CSS-4.3.2-brightgreen.svg)
@@ -16,7 +16,7 @@ This site combines three powerful tools:
 
 ## ✨ Key Features
 
-### YouTube Playlist Calculator
+### [YouTube Playlist Calculator](https://www.ytplaylistcalc.pro/)
 - Calculate total duration of any public/private YouTube playlist
 - Multiple playlists support
 - Custom playback speeds (0.1x–10x)
@@ -24,13 +24,13 @@ This site combines three powerful tools:
 - Search & sort functionality
 - Speed matrix showing time saved at different speeds
 
-### YouTube Thumbnail Grabber
+### [YouTube Thumbnail Grabber](https://www.ytplaylistcalc.pro/youtube-thumbnail-downloader)
 - Download thumbnails in all available resolutions
 - **Note**: 4K thumbnails don't exist on YouTube; MaxRes (1080×720) is the maximum
 - Direct from YouTube's CDN - no login, no watermarks
 - Works for Shorts with appropriate resolution limits
 
-### YouTube Deadline Planner
+### [YouTube Deadline Planner](https://ytplaylistcalc.pro/deadline-planner)
 - Study planner for finishing playlists by deadlines
 - Set custom speeds and multiple sessions per day
 - Speed matrix comparing daily watch time at every speed
